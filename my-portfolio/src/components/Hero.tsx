@@ -1,10 +1,9 @@
 "use client";
-
 import { motion } from "framer-motion";
 
-export default function Home() {
+export default function Hero() {
   return (
-    <section className="h-[90vh] flex flex-col justify-center items-center text-center px-6">
+    <section className="h-[90vh] flex flex-col justify-center items-center text-center">
       <motion.h1
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -13,7 +12,6 @@ export default function Home() {
       >
         Hi, I’m Your Name
       </motion.h1>
-
       <motion.p
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -22,7 +20,6 @@ export default function Home() {
       >
         I build modern, interactive websites that are smooth and engaging.
       </motion.p>
-
       <motion.a
         href="/projects"
         whileHover={{ scale: 1.05 }}
