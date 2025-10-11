@@ -1,16 +1,9 @@
+import Hero from "./components/Hero";
+
 export default function Home() {
   return (
     <main className="scroll-smooth">
-      {/* Hero Section */}
-      <section
-        id="hero"
-        className="min-h-screen flex flex-col justify-center items-center bg-black text-center px-4"
-      >
-        <h1 className="text-6xl font-bold mb-4">Hi, I'm Abrar Khan</h1>
-        <p className="text-xl text-gray-400">
-          Web Developer • Designer • Storyteller
-        </p>
-      </section>
+      <Hero />
 
       {/* About Section */}
       <section
