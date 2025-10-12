@@ -1,21 +1,11 @@
 import Hero from "./components/Hero";
+import About from "./components/About";
 
 export default function Home() {
   return (
     <main className="scroll-smooth">
       <Hero />
-
-      {/* About Section */}
-      <section
-        id="about"
-        className="min-h-screen flex flex-col justify-center items-center bg-zinc-900 px-4"
-      >
-        <h2 className="text-4xl font-bold mb-6">About Me</h2>
-        <p className="max-w-2xl text-center text-gray-400">
-          I’m passionate about creating beautiful, interactive experiences on
-          the web. This is where my creativity meets code.
-        </p>
-      </section>
+      <About />
 
       {/* Projects Section */}
       <section
