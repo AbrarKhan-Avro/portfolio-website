@@ -46,11 +46,11 @@ export default function Hero() {
       variants={fadeVariant}
       initial="hidden"
       animate={controls}
-      className="relative min-h-screen flex flex-col justify-center items-center text-center overflow-hidden bg-black px-4"
+      className="relative min-h-screen flex flex-col justify-center items-center text-center overflow-hidden bg-white dark:bg-black transition-colors duration-500 px-4"
     >
       {/* Animated gradient background */}
       <motion.div
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-black"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-400/20 via-transparent to-white dark:from-purple-900/20 dark:to-black"
         animate={{
           backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
         }}
@@ -63,7 +63,7 @@ export default function Hero() {
 
       {/* Floating blurred orbs */}
       <motion.div
-        className="absolute w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        className="absolute w-[600px] h-[600px] bg-purple-400/10 dark:bg-purple-500/10 rounded-full blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         animate={{
           x: [0, 20, 0],
           y: [0, -20, 0],
@@ -72,7 +72,7 @@ export default function Hero() {
       ></motion.div>
 
       <motion.div
-        className="absolute w-[400px] h-[400px] bg-pink-500/10 rounded-full blur-3xl top-[30%] left-[15%]"
+        className="absolute w-[400px] h-[400px] bg-pink-300/10 dark:bg-pink-500/10 rounded-full blur-3xl top-[30%] left-[15%]"
         animate={{
           x: [0, -15, 0],
           y: [0, 10, 0],
@@ -91,12 +91,15 @@ export default function Hero() {
       >
         <motion.h1
           variants={fadeVariant}
-          className="text-6xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
+          className="text-6xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 dark:from-purple-400 dark:via-pink-500 dark:to-red-400"
         >
           Abrar Khan
         </motion.h1>
 
-        <motion.div variants={fadeVariant} className="text-xl md:text-2xl text-gray-300 mb-8">
+        <motion.div
+          variants={fadeVariant}
+          className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8"
+        >
           <TypeAnimation
             sequence={["Web Developer", 2000, "Designer", 2000, "Storyteller", 2000]}
             wrapper="span"

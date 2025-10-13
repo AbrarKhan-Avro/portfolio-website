@@ -43,7 +43,7 @@ export default function About() {
       variants={fadeVariant}
       initial="hidden"
       animate={controls}
-      className="relative min-h-screen flex flex-col justify-center items-center bg-zinc-900 px-6 py-24 overflow-hidden"
+      className="relative min-h-screen flex flex-col justify-center items-center bg-zinc-50 dark:bg-zinc-900 px-6 py-24 overflow-hidden transition-colors duration-500"
     >
       {/* Parallax foreground */}
       <motion.div
@@ -54,6 +54,7 @@ export default function About() {
         }}
         className="max-w-6xl w-full grid md:grid-cols-2 gap-10 items-center relative z-10"
       >
+        {/* Left: Photo */}
         <motion.div variants={fadeVariant} className="flex justify-center">
           <img
             src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=500"
@@ -62,14 +63,15 @@ export default function About() {
           />
         </motion.div>
 
+        {/* Right: Text */}
         <motion.div variants={fadeVariant} transition={{ delay: 0.2 }} className="text-center md:text-left">
-          <h2 className="text-4xl font-bold mb-6 text-white">About Me</h2>
-          <p className="text-gray-400 leading-relaxed mb-4">
+          <h2 className="text-4xl font-bold mb-6 text-zinc-900 dark:text-white">About Me</h2>
+          <p className="text-zinc-700 dark:text-gray-400 leading-relaxed mb-4">
             Hello! I'm Abrar Khan — a web developer passionate about building interactive, beautiful, and functional
             digital experiences. My work blends creativity with technology — I love crafting interfaces that tell a
             story and feel alive.
           </p>
-          <p className="text-gray-400 leading-relaxed">
+          <p className="text-zinc-700 dark:text-gray-400 leading-relaxed">
             When I’m not coding, I enjoy designing motion graphics, learning new tools, and exploring how technology
             can inspire emotion through design.
           </p>

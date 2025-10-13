@@ -2,6 +2,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import PageTransition from "./components/PageTransition";
 import CustomCursor from "./components/CustomCursor";
+import { ThemeProvider } from "next-themes";
 
 export const metadata = {
   title: "Abrar Khan Portfolio",
@@ -10,16 +11,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="bg-black text-white scroll-smooth relative">
-        {/* Custom cursor */}
-        <CustomCursor />
+    <html lang="en" suppressHydrationWarning>
+      <body className="bg-white text-black dark:bg-black dark:text-white scroll-smooth relative transition-colors duration-300">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={true}>
+          {/* Custom cursor */}
+          <CustomCursor />
 
-        {/* Navbar */}
-        <Navbar />
+          {/* Navbar */}
+          <Navbar />
 
-        {/* Page content with smooth fade transitions */}
-        <PageTransition>{children}</PageTransition>
+          {/* Page content with smooth fade transitions */}
+          <PageTransition>{children}</PageTransition>
+        </ThemeProvider>
       </body>
     </html>
   );

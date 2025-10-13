@@ -67,7 +67,7 @@ export default function Projects() {
       variants={fadeVariant}
       initial="hidden"
       animate={controls}
-      className="relative min-h-screen bg-zinc-800 px-6 py-24 flex flex-col items-center overflow-hidden"
+      className="relative min-h-screen bg-zinc-50 dark:bg-zinc-900 px-6 py-24 flex flex-col items-center overflow-hidden transition-colors duration-500"
     >
       <motion.div
         style={{
@@ -77,7 +77,10 @@ export default function Projects() {
         }}
         className="relative z-10 flex flex-col items-center w-full"
       >
-        <motion.h2 variants={fadeVariant} className="text-4xl font-bold text-white mb-12">
+        <motion.h2
+          variants={fadeVariant}
+          className="text-4xl font-bold text-zinc-900 dark:text-white mb-12"
+        >
           My Projects
         </motion.h2>
 
@@ -88,7 +91,7 @@ export default function Projects() {
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-2xl shadow-lg bg-zinc-900 hover:bg-zinc-700 transition-all duration-500"
+              className="group relative overflow-hidden rounded-2xl shadow-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-500"
               variants={fadeVariant}
               transition={{ delay: index * 0.2 }}
             >
@@ -101,14 +104,17 @@ export default function Projects() {
               </div>
 
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-2">
+                <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-2">
                   {project.title}
                 </h3>
-                <p className="text-gray-400 text-sm">{project.description}</p>
+                <p className="text-zinc-600 dark:text-gray-400 text-sm">
+                  {project.description}
+                </p>
               </div>
 
+              {/* Hover overlay */}
               <motion.div
-                className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex justify-center items-center text-white text-lg font-medium transition-opacity duration-500"
+                className="absolute inset-0 bg-black/30 dark:bg-black/50 opacity-0 group-hover:opacity-100 flex justify-center items-center text-white text-lg font-medium transition-opacity duration-500"
                 whileHover={{ scale: 1.05 }}
               >
                 View Project →
