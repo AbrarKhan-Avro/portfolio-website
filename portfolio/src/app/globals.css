@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* -----------------------
+   Custom Properties / Theme
+----------------------- */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -21,8 +24,19 @@
   }
 }
 
+/* -----------------------
+   Global Styles
+----------------------- */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease; /* smooth theme transitions */
+}
+
+/* -----------------------
+   Hide Default Cursor
+----------------------- */
+html, body, * {
+  cursor: none !important;
 }

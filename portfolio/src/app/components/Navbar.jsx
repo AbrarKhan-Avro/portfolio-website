@@ -6,12 +6,32 @@ import { Moon, Sun } from "lucide-react";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [theme, setTheme] = useState("dark");
+  const [activeSection, setActiveSection] = useState("hero");
 
   // Handle scroll shadow / transparency
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Scroll Spy: Detect which section is in viewport
+  useEffect(() => {
+    const sections = document.querySelectorAll("section[id]");
+    const handleScrollSpy = () => {
+      const scrollPos = window.scrollY + window.innerHeight / 2;
+      sections.forEach((section) => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        const id = section.getAttribute("id");
+        if (scrollPos >= top && scrollPos < top + height) {
+          setActiveSection(id);
+        }
+      });
+    };
+    window.addEventListener("scroll", handleScrollSpy);
+    handleScrollSpy(); // initialize on load
+    return () => window.removeEventListener("scroll", handleScrollSpy);
   }, []);
 
   // Handle theme toggle + persist to localStorage
@@ -30,14 +50,18 @@ export default function Navbar() {
     if (savedTheme) {
       setTheme(savedTheme);
     } else {
-      // default to dark
-      setTheme("dark");
+      setTheme("dark"); // default
     }
   }, []);
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
+
+  const navItems = [
+    { name: "Home", id: "hero" },
+    { name: "About", id: "about" },
+    { name: "Projects", id: "projects" },
+    { name: "Contact", id: "contact" },
+  ];
 
   return (
     <nav
@@ -53,27 +77,28 @@ export default function Navbar() {
         </h1>
 
         <div className="flex items-center space-x-6">
-          <ul className="flex space-x-6 text-gray-700 dark:text-gray-300">
-            <li>
-              <a href="#hero" className="hover:text-black dark:hover:text-white transition">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#about" className="hover:text-black dark:hover:text-white transition">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="#projects" className="hover:text-black dark:hover:text-white transition">
-                Projects
-              </a>
-            </li>
-            <li>
-              <a href="#contact" className="hover:text-black dark:hover:text-white transition">
-                Contact
-              </a>
-            </li>
+          <ul className="flex space-x-6 text-gray-700 dark:text-gray-300 relative">
+            {navItems.map((item) => (
+              <li key={item.id} className="relative">
+                <a
+                  href={`#${item.id}`}
+                  className={`transition-colors duration-300 font-medium ${
+                    activeSection === item.id
+                      ? "text-purple-600 dark:text-purple-400"
+                      : "hover:text-black dark:hover:text-white"
+                  }`}
+                >
+                  {item.name}
+                </a>
+
+                {/* Animated underline */}
+                <span
+                  className={`absolute left-0 -bottom-1 h-0.5 bg-purple-600 dark:bg-purple-400 transition-all duration-300 ${
+                    activeSection === item.id ? "w-full" : "w-0"
+                  }`}
+                ></span>
+              </li>
+            ))}
           </ul>
 
           {/* Theme toggle button */}
