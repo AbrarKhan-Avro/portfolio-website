@@ -1,17 +1,31 @@
 "use client";
 
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion, useMotionValue, useTransform, useAnimation } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { FiChevronDown } from "react-icons/fi";
 import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 export default function Hero() {
-  // Track mouse position
+  // Scroll-triggered fade in/out
+  const controls = useAnimation();
+  const [ref, inView] = useInView({ threshold: 0.3 });
+
+  useEffect(() => {
+    if (inView) controls.start("visible");
+    else controls.start("hidden");
+  }, [controls, inView]);
+
+  const fadeVariant = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
+
+  // Parallax motion
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
 
-  // Set viewport dimensions after component mounts (avoids window error)
   useEffect(() => {
     setViewport({ width: window.innerWidth, height: window.innerHeight });
     const handleMouseMove = (e) => {
@@ -22,13 +36,16 @@ export default function Hero() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [x, y]);
 
-  // Create transforms only after viewport is known
   const rotateX = useTransform(y, [0, viewport.height || 1], [10, -10]);
   const rotateY = useTransform(x, [0, viewport.width || 1], [-10, 10]);
 
   return (
-    <section
+    <motion.section
+      ref={ref}
       id="hero"
+      variants={fadeVariant}
+      initial="hidden"
+      animate={controls}
       className="relative min-h-screen flex flex-col justify-center items-center text-center overflow-hidden bg-black px-4"
     >
       {/* Animated gradient background */}
@@ -73,29 +90,15 @@ export default function Hero() {
         className="relative z-10 flex flex-col items-center"
       >
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
+          variants={fadeVariant}
           className="text-6xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
         >
           Abrar Khan
         </motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 1 }}
-          className="text-xl md:text-2xl text-gray-300 mb-8"
-        >
+        <motion.div variants={fadeVariant} className="text-xl md:text-2xl text-gray-300 mb-8">
           <TypeAnimation
-            sequence={[
-              "Web Developer",
-              2000,
-              "Designer",
-              2000,
-              "Storyteller",
-              2000,
-            ]}
+            sequence={["Web Developer", 2000, "Designer", 2000, "Storyteller", 2000]}
             wrapper="span"
             speed={40}
             repeat={Infinity}
@@ -103,6 +106,7 @@ export default function Hero() {
         </motion.div>
 
         <motion.a
+          variants={fadeVariant}
           href="#projects"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -114,18 +118,12 @@ export default function Hero() {
 
       {/* Scroll down indicator */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 10, 0] }}
-        transition={{
-          delay: 2,
-          repeat: Infinity,
-          duration: 2,
-          ease: "easeInOut",
-        }}
+        animate={{ opacity: [0.6, 1, 0.6], y: [0, 10, 0] }}
+        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
         className="absolute bottom-10 text-gray-400 text-3xl"
       >
         <FiChevronDown />
       </motion.div>
-    </section>
+    </motion.section>
   );
 }
