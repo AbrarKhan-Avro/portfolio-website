@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, animate } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function CustomCursor() {
@@ -11,44 +11,42 @@ export default function CustomCursor() {
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
-  const [cursorSize, setCursorSize] = useState(24); // default size
+  const [cursorSize, setCursorSize] = useState(24);
   const [isHovering, setIsHovering] = useState(false);
   const [isText, setIsText] = useState(false);
 
   useEffect(() => {
     const moveCursor = (e) => {
-      cursorX.set(e.clientX - cursorSize / 2);
-      cursorY.set(e.clientY - cursorSize / 2);
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
 
     window.addEventListener("mousemove", moveCursor);
 
     const hoverStart = () => {
       setIsHovering(true);
-      setCursorSize(40); // expand for buttons/links
+      setCursorSize(40);
     };
     const hoverEnd = () => {
       setIsHovering(false);
-      setCursorSize(24); // back to default
+      setCursorSize(24);
     };
 
     const textStart = () => {
       setIsText(true);
-      setCursorSize(12); // shrink for text
+      setCursorSize(12);
     };
     const textEnd = () => {
       setIsText(false);
-      setCursorSize(isHovering ? 40 : 24); // respect hover state
+      setCursorSize(isHovering ? 40 : 24);
     };
 
-    // hoverable elements
     const hoverables = document.querySelectorAll("a, button, .hoverable");
     hoverables.forEach((el) => {
       el.addEventListener("mouseenter", hoverStart);
       el.addEventListener("mouseleave", hoverEnd);
     });
 
-    // text/input elements
     const texts = document.querySelectorAll("input, textarea, [contenteditable='true']");
     texts.forEach((el) => {
       el.addEventListener("mouseenter", textStart);
@@ -70,23 +68,43 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Outer glow */}
+      {/* Outer big glow */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 w-12 h-12 rounded-full bg-purple-500/20 mix-blend-lighten blur-lg z-[9999]"
+        className="pointer-events-none fixed top-0 left-0 rounded-full bg-purple-500/5 blur-[120px] z-[9998]"
         style={{
+          width: 400,
+          height: 400,
           translateX: cursorXSpring,
           translateY: cursorYSpring,
+          x: "-50%",
+          y: "-50%",
+        }}
+      />
+
+      {/* Inner glow */}
+      <motion.div
+        className="pointer-events-none fixed top-0 left-0 rounded-full bg-purple-400/10 blur-[60px] mix-blend-lighten z-[9999]"
+        style={{
+          width: 150,
+          height: 150,
+          translateX: cursorXSpring,
+          translateY: cursorYSpring,
+          x: "-50%",
+          y: "-50%",
         }}
       />
 
       {/* Main cursor */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 rounded-full mix-blend-difference z-[9999] bg-white/80"
+        className="pointer-events-none fixed top-0 left-0 rounded-full mix-blend-difference bg-white z-[10000]"
         style={{
           width: cursorSize,
           height: cursorSize,
           translateX: cursorXSpring,
           translateY: cursorYSpring,
+          x: "-50%",
+          y: "-50%",
+          scale: isText ? 0.6 : 1,
         }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
       />
