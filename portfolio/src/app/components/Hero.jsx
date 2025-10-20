@@ -3,11 +3,10 @@
 import { motion, useMotionValue, useTransform, useAnimation } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { FiChevronDown } from "react-icons/fi";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 
 export default function Hero() {
-  // Scroll-triggered fade in/out
   const controls = useAnimation();
   const [ref, inView] = useInView({ threshold: 0.3 });
 
@@ -39,6 +38,99 @@ export default function Hero() {
   const rotateX = useTransform(y, [0, viewport.height || 1], [10, -10]);
   const rotateY = useTransform(x, [0, viewport.width || 1], [-10, 10]);
 
+  // === Magnetic Particle Network ===
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    let particles = [];
+    const numParticles = 120;
+    const maxDistance = 150;
+    let mouse = { x: null, y: null, radius: 150 };
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    window.addEventListener("mousemove", (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    for (let i = 0; i < numParticles; i++) {
+      const size = Math.random() * 2 + 1;
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      const dx = (Math.random() - 0.5) * 0.5;
+      const dy = (Math.random() - 0.5) * 0.5;
+      particles.push({ x, y, dx, dy, size });
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const isDark = document.documentElement.classList.contains("dark");
+      const color = isDark ? "rgba(147, 51, 234, 0.6)" : "rgba(168, 85, 247, 0.6)";
+      const lineColor = isDark ? "rgba(147, 51, 234, 0.2)" : "rgba(168, 85, 247, 0.2)";
+
+      // Draw connections
+      for (let i = 0; i < particles.length; i++) {
+        const p1 = particles[i];
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+          if (dist < maxDistance) {
+            ctx.strokeStyle = lineColor;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw particles
+      for (let p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+
+        // Move
+        p.x += p.dx;
+        p.y += p.dy;
+
+        // Bounce
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+        // Magnetic attraction
+        if (mouse.x && mouse.y) {
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const distance = Math.hypot(dx, dy);
+          if (distance < mouse.radius) {
+            const force = (mouse.radius - distance) / mouse.radius;
+            p.x -= (dx / distance) * force * 2;
+            p.y -= (dy / distance) * force * 2;
+          }
+        }
+      }
+      requestAnimationFrame(drawParticles);
+    }
+
+    drawParticles();
+
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+    };
+  }, []);
+
   return (
     <motion.section
       ref={ref}
@@ -48,37 +140,11 @@ export default function Hero() {
       animate={controls}
       className="relative min-h-screen flex flex-col justify-center items-center text-center overflow-hidden bg-white dark:bg-black transition-colors duration-500 px-4"
     >
-      {/* Animated gradient background */}
-      <motion.div
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-400/20 via-transparent to-white dark:from-purple-900/20 dark:to-black"
-        animate={{
-          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: 12,
-          ease: "linear",
-        }}
-      />
-
-      {/* Floating blurred orbs */}
-      <motion.div
-        className="absolute w-[600px] h-[600px] bg-purple-400/10 dark:bg-purple-500/10 rounded-full blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        animate={{
-          x: [0, 20, 0],
-          y: [0, -20, 0],
-        }}
-        transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
-      ></motion.div>
-
-      <motion.div
-        className="absolute w-[400px] h-[400px] bg-pink-300/10 dark:bg-pink-500/10 rounded-full blur-3xl top-[30%] left-[15%]"
-        animate={{
-          x: [0, -15, 0],
-          y: [0, 10, 0],
-        }}
-        transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
-      ></motion.div>
+      {/* Interactive magnetic background */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 z-0"
+      ></canvas>
 
       {/* Foreground content with 3D parallax */}
       <motion.div
@@ -119,7 +185,6 @@ export default function Hero() {
         </motion.a>
       </motion.div>
 
-      {/* Scroll down indicator */}
       <motion.div
         animate={{ opacity: [0.6, 1, 0.6], y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
