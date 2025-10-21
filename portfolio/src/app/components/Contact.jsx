@@ -84,7 +84,7 @@ export default function Contact() {
               onChange={handleChange}
               required
               className="w-full p-3 rounded-lg bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-gray-100 border border-zinc-300 dark:border-zinc-700
-                         focus:border-purple-500 focus:ring-2 focus:ring-purple-500 outline-none transition-colors transition-shadow duration-500"
+                         focus:border-purple-500 focus:ring-2 focus:ring-purple-500 outline-none transition-all duration-500"
             />
           </div>
 
@@ -99,7 +99,7 @@ export default function Contact() {
               onChange={handleChange}
               required
               className="w-full p-3 rounded-lg bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-gray-100 border border-zinc-300 dark:border-zinc-700
-                         focus:border-purple-500 focus:ring-2 focus:ring-purple-500 outline-none transition-colors transition-shadow duration-500"
+                         focus:border-purple-500 focus:ring-2 focus:ring-purple-500 outline-none transition-all duration-500"
             />
           </div>
 
@@ -114,7 +114,7 @@ export default function Contact() {
               required
               rows="5"
               className="w-full p-3 rounded-lg bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-gray-100 border border-zinc-300 dark:border-zinc-700
-                         focus:border-purple-500 focus:ring-2 focus:ring-purple-500 outline-none transition-colors transition-shadow duration-500 resize-none"
+                         focus:border-purple-500 focus:ring-2 focus:ring-purple-500 outline-none transition-all duration-500 resize-none"
             />
           </div>
 
