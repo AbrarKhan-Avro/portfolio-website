@@ -167,8 +167,8 @@ export default function Navbar() {
             <motion.button
               onClick={toggleTheme}
               whileHover={{
-                scale: 1.1,
-                rotate: 10,
+                scale: 1.5,
+                rotate: 20,
                 backgroundColor:
                   theme === "dark"
                     ? "rgba(255,255,255,0.1)"
