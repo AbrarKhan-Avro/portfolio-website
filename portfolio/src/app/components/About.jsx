@@ -45,7 +45,7 @@ export default function About() {
     >
       {/* Animated Gradient Background */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-blue-300 via-cyan-200 to-teal-300 dark:from-blue-900 dark:via-cyan-900 dark:to-teal-950 -z-10"
+        className="absolute inset-0 bg-gradient-to-br from-blue-200 via-cyan-100 to-teal-300 dark:from-blue-950 dark:via-cyan-900 dark:to-teal-800 -z-10"
         animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
         transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
         style={{ backgroundSize: "300% 300%", filter: "blur(60px)" }}
