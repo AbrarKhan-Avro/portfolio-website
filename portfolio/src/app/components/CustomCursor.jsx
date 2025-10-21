@@ -14,13 +14,13 @@ export default function CustomCursor() {
   const [cursorSize, setCursorSize] = useState(24);
   const [isHovering, setIsHovering] = useState(false);
   const [isText, setIsText] = useState(false);
+  const [ripples, setRipples] = useState([]); // store active ripples
 
   useEffect(() => {
     const moveCursor = (e) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
     };
-
     window.addEventListener("mousemove", moveCursor);
 
     const hoverStart = () => {
@@ -41,6 +41,18 @@ export default function CustomCursor() {
       setCursorSize(isHovering ? 40 : 24);
     };
 
+    const handleClick = (e) => {
+      const id = Date.now();
+      const x = e.clientX;
+      const y = e.clientY;
+      setRipples((prev) => [...prev, { id, x, y }]);
+
+      // Remove ripple after animation finishes (500ms)
+      setTimeout(() => {
+        setRipples((prev) => prev.filter((r) => r.id !== id));
+      }, 500);
+    };
+
     const hoverables = document.querySelectorAll("a, button, .hoverable");
     hoverables.forEach((el) => {
       el.addEventListener("mouseenter", hoverStart);
@@ -53,8 +65,11 @@ export default function CustomCursor() {
       el.addEventListener("mouseleave", textEnd);
     });
 
+    window.addEventListener("click", handleClick);
+
     return () => {
       window.removeEventListener("mousemove", moveCursor);
+      window.removeEventListener("click", handleClick);
       hoverables.forEach((el) => {
         el.removeEventListener("mouseenter", hoverStart);
         el.removeEventListener("mouseleave", hoverEnd);
@@ -108,6 +123,25 @@ export default function CustomCursor() {
         }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
       />
+
+      {/* Ripple effects */}
+      {ripples.map((ripple) => (
+        <motion.div
+          key={ripple.id}
+          className="pointer-events-none fixed top-0 left-0 rounded-full border border-purple-400 z-[9999]"
+          initial={{ opacity: 0.6, scale: 0 }}
+          animate={{ opacity: 0, scale: 5 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          style={{
+            width: 30,
+            height: 30,
+            translateX: ripple.x,
+            translateY: ripple.y,
+            x: "-50%",
+            y: "-50%",
+          }}
+        />
+      ))}
     </>
   );
 }
