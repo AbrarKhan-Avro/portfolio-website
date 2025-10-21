@@ -12,7 +12,7 @@ export default function ParticleBackground() {
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
-      const totalHeight = document.body.scrollHeight; // total page height
+      const totalHeight = document.body.scrollHeight;
       canvas.height = totalHeight;
       setPageHeight(totalHeight);
     };
@@ -26,10 +26,10 @@ export default function ParticleBackground() {
 
     window.addEventListener("mousemove", (e) => {
       mouse.x = e.clientX;
-      mouse.y = e.clientY + window.scrollY; // track scroll
+      mouse.y = e.clientY + window.scrollY;
     });
 
-    // Initialize particles across full page height
+    // Initialize particles
     for (let i = 0; i < numParticles; i++) {
       const size = Math.random() * 2 + 1;
       const x = Math.random() * canvas.width;
@@ -39,21 +39,36 @@ export default function ParticleBackground() {
       particles.push({ x, y, dx, dy, size });
     }
 
+    // Color updater for dark/light mode
+    const getColors = () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      return isDark
+        ? { dot: "rgba(255, 255, 255, 0.5)", line: "rgba(169, 169, 169, 0.2)" } // white dots, darkgray lines
+        : { dot: "rgba(0, 0, 0, 0.5)", line: "rgba(10, 20, 20, 0.2)" };
+    };
+
+    let colors = getColors();
+
+    // Observe dark mode change dynamically
+    const observer = new MutationObserver(() => {
+      colors = getColors();
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
     function drawParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const isDark = document.documentElement.classList.contains("dark");
-      const color = isDark ? "rgba(147, 51, 234, 0.6)" : "rgba(168, 85, 247, 0.6)";
-      const lineColor = isDark ? "rgba(147, 51, 234, 0.2)" : "rgba(168, 85, 247, 0.2)";
-
-      // Lines
+      // Draw lines
       for (let i = 0; i < particles.length; i++) {
         const p1 = particles[i];
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
           if (dist < maxDistance) {
-            ctx.strokeStyle = lineColor;
+            ctx.strokeStyle = colors.line;
             ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
@@ -63,11 +78,11 @@ export default function ParticleBackground() {
         }
       }
 
-      // Particles
+      // Draw dots and move particles
       for (let p of particles) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = color;
+        ctx.fillStyle = colors.dot;
         ctx.fill();
 
         p.x += p.dx;
@@ -77,7 +92,7 @@ export default function ParticleBackground() {
         if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
 
-        // Magnetic cursor effect
+        // Mouse magnetism
         if (mouse.x && mouse.y) {
           const dx = mouse.x - p.x;
           const dy = mouse.y - p.y;
@@ -95,7 +110,10 @@ export default function ParticleBackground() {
 
     drawParticles();
 
-    return () => window.removeEventListener("resize", resizeCanvas);
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+      observer.disconnect();
+    };
   }, []);
 
   return (
