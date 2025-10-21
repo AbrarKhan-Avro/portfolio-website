@@ -1,6 +1,12 @@
 "use client";
 
-import { motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
+import {
+  motion,
+  useAnimation,
+  useMotionValue,
+  useTransform,
+  useSpring,
+} from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 
@@ -28,6 +34,7 @@ const projects = [
 export default function Projects() {
   const controls = useAnimation();
   const [ref, inView] = useInView({ threshold: 0.3 });
+
   useEffect(() => {
     if (inView) controls.start("visible");
     else controls.start("hidden");
@@ -41,18 +48,33 @@ export default function Projects() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
+
   useEffect(() => {
-    setViewport({ width: window.innerWidth, height: window.innerHeight });
+    const updateViewport = () => {
+      setViewport({ width: window.innerWidth, height: window.innerHeight });
+    };
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+
     const handleMouseMove = (e) => {
       x.set(e.clientX);
       y.set(e.clientY);
     };
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", updateViewport);
+    };
   }, [x, y]);
 
+  // Prevent NaN issues before viewport is ready
   const rotateX = useTransform(y, [0, viewport.height || 1], [8, -8]);
   const rotateY = useTransform(x, [0, viewport.width || 1], [-8, 8]);
+
+  // Smooth motion with spring
+  const smoothX = useSpring(rotateX, { stiffness: 80, damping: 20 });
+  const smoothY = useSpring(rotateY, { stiffness: 80, damping: 20 });
 
   return (
     <motion.section
@@ -71,42 +93,56 @@ export default function Projects() {
         style={{ backgroundSize: "300% 300%", filter: "blur(60px)" }}
       />
 
-      {/* Foreground */}
-      <motion.div
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="relative z-10 flex flex-col items-center w-full"
+      {/* Foreground with depth perspective */}
+      <div
+        className="relative z-10 w-full flex flex-col items-center"
+        style={{ perspective: 1000 }}
       >
-        <motion.h2
-          variants={fadeVariant}
-          className="text-4xl font-bold text-zinc-900 dark:text-white mb-12"
+        <motion.div
+          style={{
+            rotateX: smoothX,
+            rotateY: smoothY,
+            transformStyle: "preserve-3d",
+          }}
+          className="flex flex-col items-center w-full"
         >
-          My Projects
-        </motion.h2>
+          <motion.h2
+            variants={fadeVariant}
+            className="text-4xl font-bold text-zinc-900 dark:text-white mb-12"
+          >
+            My Projects
+          </motion.h2>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl w-full">
-          {projects.map((p, i) => (
-            <motion.a
-              key={i}
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-2xl shadow-lg bg-white/40 dark:bg-zinc-800/60 backdrop-blur-md transition-all duration-500"
-              variants={fadeVariant}
-              transition={{ delay: i * 0.2 }}
-            >
-              <motion.img
-                src={p.image}
-                alt={p.title}
-                className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700"
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-2">{p.title}</h3>
-                <p className="text-zinc-700 dark:text-gray-400 text-sm">{p.description}</p>
-              </div>
-            </motion.a>
-          ))}
-        </div>
-      </motion.div>
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl w-full">
+            {projects.map((p, i) => (
+              <motion.a
+                key={i}
+                href={p.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative overflow-hidden rounded-2xl shadow-lg bg-white/40 dark:bg-zinc-800/60 backdrop-blur-md transition-all duration-500"
+                variants={fadeVariant}
+                transition={{ delay: i * 0.2 }}
+                whileHover={{ scale: 1.03 }}
+              >
+                <motion.img
+                  src={p.image}
+                  alt={p.title}
+                  className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-2">
+                    {p.title}
+                  </h3>
+                  <p className="text-zinc-700 dark:text-gray-400 text-sm">
+                    {p.description}
+                  </p>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </motion.div>
+      </div>
     </motion.section>
   );
 }

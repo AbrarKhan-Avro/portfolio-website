@@ -1,6 +1,12 @@
 "use client";
 
-import { motion, useMotionValue, useTransform, useAnimation } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  useSpring,
+  useAnimation,
+} from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { FiChevronDown } from "react-icons/fi";
 import { useEffect, useState } from "react";
@@ -25,17 +31,31 @@ export default function Hero() {
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    setViewport({ width: window.innerWidth, height: window.innerHeight });
+    const updateSize = () => {
+      setViewport({ width: window.innerWidth, height: window.innerHeight });
+    };
+    updateSize();
+    window.addEventListener("resize", updateSize);
+
     const handleMouseMove = (e) => {
       x.set(e.clientX);
       y.set(e.clientY);
     };
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", updateSize);
+    };
   }, [x, y]);
 
+  // Prevent divide by zero when viewport not ready
   const rotateX = useTransform(y, [0, viewport.height || 1], [10, -10]);
   const rotateY = useTransform(x, [0, viewport.width || 1], [-10, 10]);
+
+  // Smooth motion
+  const smoothX = useSpring(rotateX, { stiffness: 80, damping: 20 });
+  const smoothY = useSpring(rotateY, { stiffness: 80, damping: 20 });
 
   return (
     <motion.section
@@ -59,40 +79,58 @@ export default function Hero() {
         }}
       />
 
-      {/* Foreground */}
-      <motion.div
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      {/* Foreground (with perspective and smooth tilt) */}
+      <div
         className="relative z-10 flex flex-col items-center"
+        style={{
+          perspective: 1000, // Adds depth
+        }}
       >
-        <motion.h1
-          variants={fadeVariant}
-          className="text-6xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 dark:from-purple-400 dark:via-pink-500 dark:to-red-400"
-        >
-          Abrar Khan
-        </motion.h1>
-
         <motion.div
-          variants={fadeVariant}
-          className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8"
+          style={{
+            rotateX: smoothX,
+            rotateY: smoothY,
+            transformStyle: "preserve-3d",
+          }}
+          className="flex flex-col items-center"
         >
-          <TypeAnimation
-            sequence={["Web Developer", 2000, "Designer", 2000, "Storyteller", 2000]}
-            wrapper="span"
-            speed={40}
-            repeat={Infinity}
-          />
-        </motion.div>
+          <motion.h1
+            variants={fadeVariant}
+            className="text-6xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 dark:from-purple-400 dark:via-pink-500 dark:to-red-400"
+          >
+            Abrar Khan
+          </motion.h1>
 
-        <motion.a
-          variants={fadeVariant}
-          href="#projects"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-white font-medium shadow-lg hover:shadow-pink-500/50 transition"
-        >
-          View My Work
-        </motion.a>
-      </motion.div>
+          <motion.div
+            variants={fadeVariant}
+            className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8"
+          >
+            <TypeAnimation
+              sequence={[
+                "Web Developer",
+                2000,
+                "Designer",
+                2000,
+                "Storyteller",
+                2000,
+              ]}
+              wrapper="span"
+              speed={40}
+              repeat={Infinity}
+            />
+          </motion.div>
+
+          <motion.a
+            variants={fadeVariant}
+            href="#projects"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-white font-medium shadow-lg hover:shadow-pink-500/50 transition"
+          >
+            View My Work
+          </motion.a>
+        </motion.div>
+      </div>
 
       <motion.div
         animate={{ opacity: [0.6, 1, 0.6], y: [0, 10, 0] }}
