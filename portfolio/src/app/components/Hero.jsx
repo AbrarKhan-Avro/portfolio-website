@@ -48,7 +48,7 @@ export default function Hero() {
     >
       {/* Animated Gradient Background */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-purple-100 via-pink-100 to-rose-200 dark:from-purple-900 dark:via-fuchsia-900 dark:to-rose-950"
+        className="absolute inset-0 bg-gradient-to-br from-purple-200 via-pink-300 to-rose-100 dark:from-purple-800 dark:via-fuchsia-900 dark:to-rose-950"
         animate={{
           backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
         }}
