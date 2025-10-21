@@ -7,22 +7,19 @@ import { useEffect, useState } from "react";
 const projects = [
   {
     title: "Creative Portfolio",
-    description:
-      "An interactive portfolio showcasing animations, motion design, and responsive layouts.",
+    description: "An interactive portfolio showcasing animations.",
     image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
     link: "#",
   },
   {
     title: "E-commerce Dashboard",
-    description:
-      "A sleek dashboard with charts, filters, and analytics for modern online stores.",
+    description: "A sleek dashboard with analytics.",
     image: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800",
     link: "#",
   },
   {
     title: "AI Chatbot App",
-    description:
-      "Conversational AI interface built with Next.js and OpenAI APIs.",
+    description: "Conversational AI interface built with Next.js.",
     image: "https://images.unsplash.com/photo-1531497865144-0464ef8fb9c5?w=800",
     link: "#",
   },
@@ -31,7 +28,6 @@ const projects = [
 export default function Projects() {
   const controls = useAnimation();
   const [ref, inView] = useInView({ threshold: 0.3 });
-
   useEffect(() => {
     if (inView) controls.start("visible");
     else controls.start("hidden");
@@ -42,11 +38,9 @@ export default function Projects() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   };
 
-  // Parallax motion
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
-
   useEffect(() => {
     setViewport({ width: window.innerWidth, height: window.innerHeight });
     const handleMouseMove = (e) => {
@@ -67,14 +61,19 @@ export default function Projects() {
       variants={fadeVariant}
       initial="hidden"
       animate={controls}
-      className="relative min-h-screen bg-zinc-50 dark:bg-zinc-900 px-6 py-24 flex flex-col items-center overflow-hidden transition-colors duration-500"
+      className="relative min-h-screen flex flex-col items-center overflow-hidden px-6 py-24 transition-colors duration-700"
     >
+      {/* Gradient background */}
       <motion.div
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-        }}
+        className="absolute inset-0 bg-gradient-to-br from-amber-100 via-orange-100 to-pink-200 dark:from-amber-950 dark:via-orange-900 dark:to-pink-950"
+        animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
+        transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
+        style={{ backgroundSize: "300% 300%", filter: "blur(60px)" }}
+      />
+
+      {/* Foreground */}
+      <motion.div
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         className="relative z-10 flex flex-col items-center w-full"
       >
         <motion.h2
@@ -85,40 +84,25 @@ export default function Projects() {
         </motion.h2>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl w-full">
-          {projects.map((project, index) => (
+          {projects.map((p, i) => (
             <motion.a
-              key={index}
-              href={project.link}
+              key={i}
+              href={p.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-2xl shadow-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all duration-500"
+              className="group relative overflow-hidden rounded-2xl shadow-lg bg-white/40 dark:bg-zinc-800/60 backdrop-blur-md transition-all duration-500"
               variants={fadeVariant}
-              transition={{ delay: index * 0.2 }}
+              transition={{ delay: i * 0.2 }}
             >
-              <div className="overflow-hidden">
-                <motion.img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-              </div>
-
+              <motion.img
+                src={p.image}
+                alt={p.title}
+                className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700"
+              />
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-zinc-600 dark:text-gray-400 text-sm">
-                  {project.description}
-                </p>
+                <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-2">{p.title}</h3>
+                <p className="text-zinc-700 dark:text-gray-400 text-sm">{p.description}</p>
               </div>
-
-              {/* Hover overlay */}
-              <motion.div
-                className="absolute inset-0 bg-black/30 dark:bg-black/50 opacity-0 group-hover:opacity-100 flex justify-center items-center text-white text-lg font-medium transition-opacity duration-500"
-                whileHover={{ scale: 1.05 }}
-              >
-                View Project →
-              </motion.div>
             </motion.a>
           ))}
         </div>
