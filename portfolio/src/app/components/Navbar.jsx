@@ -1,17 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  Moon,
-  Sun,
-  Menu,
-  X,
-  Home,
-  User,
-  Folder,
-  Mail,
-} from "lucide-react";
-import { motion } from "framer-motion";
+import { Moon, Sun, Menu, X, Home, User, Folder, Mail } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -19,14 +10,14 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Scroll shadow + shrink
+  // Scroll shrink & shadow
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll Spy
+  // Scroll spy
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]");
     const handleScrollSpy = () => {
@@ -45,7 +36,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScrollSpy);
   }, []);
 
-  // Theme toggle
+  // Theme handling
   useEffect(() => {
     if (theme === "dark") document.documentElement.classList.add("dark");
     else document.documentElement.classList.remove("dark");
@@ -53,8 +44,8 @@ export default function Navbar() {
   }, [theme]);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) setTheme(savedTheme);
+    const saved = localStorage.getItem("theme");
+    if (saved) setTheme(saved);
     else setTheme("dark");
   }, []);
 
@@ -68,130 +59,191 @@ export default function Navbar() {
   ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/70 dark:bg-black/70 backdrop-blur-lg shadow-md h-12"
-          : "bg-transparent h-20"
-      }`}
-    >
-      <div className="max-w-6xl mx-auto px-6 h-full flex justify-between items-center">
-        {/* Logo */}
-        <h1
-          className={`text-xl font-bold transition-all duration-300 ${
-            scrolled ? "text-lg" : "text-xl"
-          } text-gray-900 dark:text-white`}
-        >
-          Abrar Khan
-        </h1>
+    <>
+      <style jsx global>{`
+        /* Dual-line hover effect */
+        .nav-hover::before,
+        .nav-hover::after {
+          content: "";
+          position: absolute;
+          height: 2px;
+          width: 0;
+          background: linear-gradient(
+            to right,
+            #8b5cf6,
+            #ec4899,
+            #6366f1
+          );
+          transition: width 0.4s ease;
+        }
+        .nav-hover::before {
+          bottom: 0;
+          left: 0;
+        }
+        .nav-hover::after {
+          top: 0;
+          right: 0;
+        }
+        .nav-hover:hover::before,
+        .nav-hover:hover::after {
+          width: 100%;
+        }
+        .nav-hover:hover {
+          background: linear-gradient(
+            90deg,
+            rgba(147, 51, 234, 0.15),
+            rgba(236, 72, 153, 0.15)
+          );
+          border-radius: 10px;
+        }
+      `}</style>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-6">
-          <ul className="flex space-x-6 relative">
-            {navItems.map((item) => (
-              <li key={item.id} className="relative flex items-center">
-                {/* Transform text → icon when scrolled */}
-                <a
-                  href={`#${item.id}`}
-                  className={`flex items-center transition-all duration-300 font-medium ${
-                    activeSection === item.id
-                      ? "text-purple-600 dark:text-purple-400"
-                      : "text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"
-                  }`}
-                >
-                  <span
-                    className={`mr-1 overflow-hidden transition-all duration-300 ${
-                      scrolled ? "w-0 opacity-0" : "w-auto opacity-100"
-                    }`}
-                  >
-                    {item.name}
-                  </span>
-                  <span
-                    className={`transition-all duration-300 ${
-                      scrolled ? "opacity-100" : "opacity-0"
-                    }`}
-                  >
-                    {item.icon}
-                  </span>
-                </a>
-                {/* Underline for text */}
-                {!scrolled && (
-                  <span
-                    className={`absolute left-0 -bottom-1 h-0.5 bg-purple-600 dark:bg-purple-400 transition-all duration-300 ${
-                      activeSection === item.id ? "w-full" : "w-0"
-                    }`}
-                  ></span>
-                )}
-              </li>
-            ))}
-          </ul>
-
-          {/* Theme toggle */}
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-            aria-label="Toggle theme"
-          >
-            {theme === "dark" ? (
-              <Sun className="w-5 h-5 text-yellow-400" />
-            ) : (
-              <Moon className="w-5 h-5 text-gray-800" />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-4">
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <motion.div
-        initial={{ x: "100%" }}
-        animate={{ x: mobileOpen ? 0 : "100%" }}
-        transition={{ type: "tween", duration: 0.3 }}
-        className="fixed top-0 right-0 h-full w-64 bg-zinc-50 dark:bg-zinc-950 shadow-lg md:hidden z-40 flex flex-col p-6"
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-white/70 dark:bg-black/70 backdrop-blur-lg shadow-md h-12"
+            : "bg-transparent h-20"
+        }`}
       >
-        <ul className="flex flex-col gap-6 mt-8">
-          {navItems.map((item) => (
-            <li key={item.id}>
-              <a
-                href={`#${item.id}`}
-                onClick={() => setMobileOpen(false)}
-                className={`block text-lg font-medium transition-colors ${
-                  activeSection === item.id
-                    ? "text-purple-600 dark:text-purple-400"
-                    : "text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"
-                }`}
-              >
-                {item.name}
-              </a>
-            </li>
-          ))}
-          <li className="mt-6">
-            <button
+        <div className="max-w-6xl mx-auto px-6 h-full flex justify-between items-center relative">
+          {/* Logo */}
+          <motion.h1
+            onClick={() =>
+              document
+                .getElementById("hero")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+            whileHover={{
+              scale: 1.5,
+              textShadow:
+                "0px 0px 30px rgba(167, 139, 250, 1), 0px 0px 50px rgba(236, 72, 153, 0.9)",
+            }}
+            whileTap={{ scale: 0.9 }}
+            className={`cursor-pointer font-bold transition-all duration-300 ${
+              scrolled ? "text-lg" : "text-xl"
+            } text-gray-900 dark:text-white select-none`}
+          >
+            Abrar Khan
+          </motion.h1>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-4">
+            <ul className="flex space-x-4">
+              {navItems.map((item) => (
+                <motion.li
+                  key={item.id}
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative group"
+                >
+                  <a
+                    href={`#${item.id}`}
+                    className={`nav-hover relative flex items-center justify-center text-center font-medium px-4 py-2 min-w-[90px] transition-all duration-300 ${
+                      activeSection === item.id
+                        ? "text-purple-600 dark:text-purple-400"
+                        : "text-gray-700 dark:text-gray-300"
+                    }`}
+                  >
+                    <span
+                      className={`transition-all duration-300 ${
+                        scrolled ? "hidden opacity-0" : "inline opacity-100"
+                      }`}
+                    >
+                      {item.name}
+                    </span>
+                    <span
+                      className={`absolute transition-all duration-300 ${
+                        scrolled ? "opacity-100" : "opacity-0"
+                      }`}
+                    >
+                      {item.icon}
+                    </span>
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
+
+            {/* Theme toggle */}
+            <motion.button
               onClick={toggleTheme}
-              className="flex items-center gap-2 p-2 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+              whileHover={{
+                scale: 1.1,
+                rotate: 10,
+                backgroundColor:
+                  theme === "dark"
+                    ? "rgba(255,255,255,0.1)"
+                    : "rgba(0,0,0,0.05)",
+              }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2 rounded-full border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+              aria-label="Toggle theme"
             >
               {theme === "dark" ? (
-                <>
-                  <Sun className="w-5 h-5 text-yellow-400" /> Light Mode
-                </>
+                <Sun className="w-5 h-5 text-yellow-400" />
               ) : (
-                <>
-                  <Moon className="w-5 h-5 text-gray-800" /> Dark Mode
-                </>
+                <Moon className="w-5 h-5 text-gray-800" />
               )}
+            </motion.button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center gap-4">
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="p-2 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            >
+              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
-          </li>
-        </ul>
-      </motion.div>
-    </nav>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 right-0 h-full w-64 bg-zinc-50 dark:bg-zinc-950 shadow-lg md:hidden z-40 flex flex-col p-6"
+            >
+              <ul className="flex flex-col gap-6 mt-8">
+                {navItems.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      onClick={() => setMobileOpen(false)}
+                      className={`block text-lg font-medium text-center transition-colors ${
+                        activeSection === item.id
+                          ? "text-purple-600 dark:text-purple-400"
+                          : "text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"
+                      }`}
+                    >
+                      {item.name}
+                    </a>
+                  </li>
+                ))}
+                <li className="mt-6 flex justify-center">
+                  <button
+                    onClick={toggleTheme}
+                    className="flex items-center justify-center gap-2 p-2 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                  >
+                    {theme === "dark" ? (
+                      <>
+                        <Sun className="w-5 h-5 text-yellow-400" /> Light Mode
+                      </>
+                    ) : (
+                      <>
+                        <Moon className="w-5 h-5 text-gray-800" /> Dark Mode
+                      </>
+                    )}
+                  </button>
+                </li>
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </>
   );
 }
