@@ -65,9 +65,9 @@ export default function Projects() {
     >
       {/* Animated Gradient Background */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-amber-100 via-orange-200 to-pink-300 dark:from-amber-800 dark:via-orange-900 dark:to-pink-950 -z-10"
+        className="absolute inset-0 bg-gradient-to-br from-amber-100 via-orange-200 to-yellow-300 dark:from-amber-950 dark:via-orange-900 dark:to-yellow-800 -z-10"
         animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
-        transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
         style={{ backgroundSize: "300% 300%", filter: "blur(60px)" }}
       />
 
