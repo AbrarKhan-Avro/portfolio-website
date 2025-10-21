@@ -63,9 +63,9 @@ export default function Projects() {
       animate={controls}
       className="relative min-h-screen flex flex-col items-center overflow-hidden px-6 py-24 transition-colors duration-700"
     >
-      {/* Gradient background */}
+      {/* Animated Gradient Background */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-amber-100 via-orange-100 to-pink-200 dark:from-amber-950 dark:via-orange-900 dark:to-pink-950"
+        className="absolute inset-0 bg-gradient-to-br from-amber-100 via-orange-200 to-pink-300 dark:from-amber-800 dark:via-orange-900 dark:to-pink-950 -z-10"
         animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
         transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
         style={{ backgroundSize: "300% 300%", filter: "blur(60px)" }}
