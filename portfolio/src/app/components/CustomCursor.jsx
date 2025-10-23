@@ -15,6 +15,7 @@ export default function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [isText, setIsText] = useState(false);
   const [ripples, setRipples] = useState([]); // store active ripples
+  const [isClicking, setIsClicking] = useState(false); // NEW: hold-click ring
 
   useEffect(() => {
     const moveCursor = (e) => {
@@ -53,23 +54,32 @@ export default function CustomCursor() {
       }, 500);
     };
 
+    const handleMouseDown = () => setIsClicking(true);
+    const handleMouseUp = () => setIsClicking(false);
+
     const hoverables = document.querySelectorAll("a, button, .hoverable");
     hoverables.forEach((el) => {
       el.addEventListener("mouseenter", hoverStart);
       el.addEventListener("mouseleave", hoverEnd);
     });
 
-    const texts = document.querySelectorAll("input, textarea, [contenteditable='true']");
+    const texts = document.querySelectorAll(
+      "input, textarea, [contenteditable='true']"
+    );
     texts.forEach((el) => {
       el.addEventListener("mouseenter", textStart);
       el.addEventListener("mouseleave", textEnd);
     });
 
     window.addEventListener("click", handleClick);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
 
     return () => {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("click", handleClick);
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
       hoverables.forEach((el) => {
         el.removeEventListener("mouseenter", hoverStart);
         el.removeEventListener("mouseleave", hoverEnd);
@@ -123,6 +133,30 @@ export default function CustomCursor() {
         }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
       />
+
+      {/* Click-hold ring */}
+      {isClicking && (
+        <motion.div
+          className="pointer-events-none fixed top-0 left-0 rounded-full border border-purple-400/80 z-[10001]"
+          style={{
+            width: cursorSize * 2,
+            height: cursorSize * 2,
+            translateX: cursorXSpring,
+            translateY: cursorYSpring,
+            x: "-50%",
+            y: "-50%",
+          }}
+          animate={{
+            opacity: 0.8,
+            scale: 1,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+          }}
+        />
+      )}
 
       {/* Ripple effects */}
       {ripples.map((ripple) => (

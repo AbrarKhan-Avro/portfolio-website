@@ -52,28 +52,23 @@ export default function Navbar() {
   const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   const navItems = [
-    { name: "Home", id: "hero", icon: <Home size={18} /> },
-    { name: "About", id: "about", icon: <User size={18} /> },
-    { name: "Projects", id: "projects", icon: <Folder size={18} /> },
-    { name: "Contact", id: "contact", icon: <Mail size={18} /> },
+    { name: "Home", id: "hero", icon: Home },
+    { name: "About", id: "about", icon: User },
+    { name: "Projects", id: "projects", icon: Folder },
+    { name: "Contact", id: "contact", icon: Mail },
   ];
 
   return (
     <>
       <style jsx global>{`
-        /* Dual-line hover effect */
+        /* Dual-line hover effect (for text items only) */
         .nav-hover::before,
         .nav-hover::after {
           content: "";
           position: absolute;
           height: 2px;
           width: 0;
-          background: linear-gradient(
-            to right,
-            #8b5cf6,
-            #ec4899,
-            #6366f1
-          );
+          background: linear-gradient(to right, #8b5cf6, #ec4899, #6366f1);
           transition: width 0.4s ease;
         }
         .nav-hover::before {
@@ -95,6 +90,20 @@ export default function Navbar() {
             rgba(236, 72, 153, 0.15)
           );
           border-radius: 10px;
+        }
+
+        /* Icon hover fill effect (when scrolled) */
+        .icon-hover {
+          transition: all 0.3s ease;
+        }
+        .icon-hover:hover {
+          transform: scale(1.3);
+          color: #000;
+          fill: #000;
+        }
+        .dark .icon-hover:hover {
+          color: #fff;
+          fill: #fff;
         }
       `}</style>
 
@@ -119,7 +128,7 @@ export default function Navbar() {
                 "0px 0px 30px rgba(167, 139, 250, 1), 0px 0px 50px rgba(236, 72, 153, 0.9)",
             }}
             whileTap={{ scale: 0.9 }}
-            className={`cursor-pointer font-bold transition-all duration-300 ${
+            className={`hoverable cursor-pointer font-bold transition-all duration-300 ${
               scrolled ? "text-lg" : "text-xl"
             } text-gray-900 dark:text-white select-none`}
           >
@@ -129,34 +138,44 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-4">
             <ul className="flex space-x-4">
-              {navItems.map((item) => (
+              {navItems.map(({ name, id, icon: Icon }) => (
                 <motion.li
-                  key={item.id}
+                  key={id}
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
                   className="relative group"
                 >
                   <a
-                    href={`#${item.id}`}
-                    className={`nav-hover relative flex items-center justify-center text-center font-medium px-4 py-2 min-w-[90px] transition-all duration-300 ${
-                      activeSection === item.id
+                    href={`#${id}`}
+                    className={`relative flex items-center justify-center text-center font-medium px-4 py-2 min-w-[90px] transition-all duration-300 ${
+                      !scrolled ? "nav-hover" : ""
+                    } ${
+                      activeSection === id
                         ? "text-purple-600 dark:text-purple-400"
                         : "text-gray-700 dark:text-gray-300"
                     }`}
                   >
+                    {/* Text (visible before scroll) */}
                     <span
                       className={`transition-all duration-300 ${
                         scrolled ? "hidden opacity-0" : "inline opacity-100"
                       }`}
                     >
-                      {item.name}
+                      {name}
                     </span>
+
+                    {/* Icon (visible after scroll) */}
                     <span
-                      className={`absolute transition-all duration-300 ${
+                      className={`absolute transition-all duration-300 flex items-center justify-center ${
                         scrolled ? "opacity-100" : "opacity-0"
                       }`}
                     >
-                      {item.icon}
+                      <Icon
+                        size={scrolled ? 20 : 18}
+                        className={`transition-all duration-300 ${
+                          scrolled ? "icon-hover" : ""
+                        }`}
+                      />
                     </span>
                   </a>
                 </motion.li>
@@ -208,18 +227,18 @@ export default function Navbar() {
               className="fixed top-0 right-0 h-full w-64 bg-zinc-50 dark:bg-zinc-950 shadow-lg md:hidden z-40 flex flex-col p-6"
             >
               <ul className="flex flex-col gap-6 mt-8">
-                {navItems.map((item) => (
-                  <li key={item.id}>
+                {navItems.map(({ name, id }) => (
+                  <li key={id}>
                     <a
-                      href={`#${item.id}`}
+                      href={`#${id}`}
                       onClick={() => setMobileOpen(false)}
                       className={`block text-lg font-medium text-center transition-colors ${
-                        activeSection === item.id
+                        activeSection === id
                           ? "text-purple-600 dark:text-purple-400"
                           : "text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"
                       }`}
                     >
-                      {item.name}
+                      {name}
                     </a>
                   </li>
                 ))}
