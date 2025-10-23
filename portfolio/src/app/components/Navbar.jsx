@@ -2,25 +2,15 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Moon, Sun, Menu, X, Home, User, Folder, Mail } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [theme, setTheme] = useState("dark");
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [fontIndex, setFontIndex] = useState(0); // Default font (Tourney)
-  const cycleIntervalRef = useRef(null);
-  const [isHoveringLogo, setIsHoveringLogo] = useState(false);
-
-  // Font list (50 fonts)
-  const fonts = [
-    "Tourney", "Montserrat", "Roboto", "Lobster", "Raleway", "Poppins", "Oswald", "Playfair Display", "Bebas Neue", "Merriweather",
-    "Pacifico", "Caveat", "Cinzel", "Comfortaa", "Dancing Script", "Exo 2", "Fira Sans", "Great Vibes", "Indie Flower", "Inconsolata",
-    "Josefin Sans", "Kanit", "Lato", "Manrope", "Mukta", "Noto Sans", "Orbitron", "Open Sans", "PT Sans", "Quicksand",
-    "Righteous", "Rubik", "Saira", "Satisfy", "Signika", "Slabo 27px", "Teko", "Titillium Web", "Ubuntu", "Varela Round",
-    "Zilla Slab", "Arvo", "Asap", "Baloo 2", "Barlow", "Cardo", "Chivo", "Crimson Text", "Domine", "Work Sans"
-  ];
+  const controls = useAnimation();
+  const intervalRef = useRef(null);
 
   // Scroll shrink & shadow
   useEffect(() => {
@@ -63,23 +53,6 @@ export default function Navbar() {
 
   const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
-  // Continuous font cycling on hover
-  useEffect(() => {
-    if (isHoveringLogo) {
-      // Clear any existing interval before starting a new one
-      clearInterval(cycleIntervalRef.current);
-
-      cycleIntervalRef.current = setInterval(() => {
-        setFontIndex((prev) => (prev + 1) % fonts.length); // continuous looping
-      }, 200); // change every 200ms
-    } else {
-      // Stop cycling on hover end
-      clearInterval(cycleIntervalRef.current);
-    }
-
-    return () => clearInterval(cycleIntervalRef.current);
-  }, [isHoveringLogo]);
-
   const navItems = [
     { name: "Home", id: "hero", icon: Home },
     { name: "About", id: "about", icon: User },
@@ -87,21 +60,54 @@ export default function Navbar() {
     { name: "Contact", id: "contact", icon: Mail },
   ];
 
+  const fonts = [
+    "Abril Fatface", "Acme", "Alfa Slab One", "Amatic SC", "Anton", "Arimo", "Asap", "Bebas Neue",
+    "Bitter", "Bree Serif", "Cabin", "Cairo", "Candal", "Catamaran", "Changa", "Cinzel", "Comfortaa",
+    "Concert One", "Cormorant Garamond", "Crete Round", "DM Sans", "DM Serif Display", "Dosis", "EB Garamond",
+    "Exo 2", "Fira Sans", "Fjalla One", "Francois One", "Fredoka One", "Glegoo", "Hind", "IBM Plex Sans",
+    "Inconsolata", "Indie Flower", "Inter", "Julius Sans One", "Josefin Sans", "Kanit", "Karla", "Krona One",
+    "Lato", "Lora", "Lobster", "Muli", "Merriweather", "Mukta", "Noto Sans", "Noto Serif", "Nunito", "Open Sans",
+    "Oswald", "Overpass", "Oxygen", "Pacifico", "Patua One", "Playfair Display", "Poppins", "PT Sans", "PT Serif",
+    "Quicksand", "Raleway", "Red Hat Display", "Righteous", "Roboto", "Roboto Condensed", "Roboto Slab", "Rokkitt",
+    "Rubik", "Sacramento", "Sanchez", "Signika", "Slabo 27px", "Spectral", "Teko", "Tinos", "Titillium Web",
+    "Ubuntu", "Varela Round", "Vollkorn", "Work Sans", "Yanone Kaffeesatz", "Yeseva One", "Zilla Slab"
+  ];
+
+
+  // Shuffle array helper
+  const shuffleArray = (arr) => {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  };
+
+  const startFontCycle = () => {
+    if (intervalRef.current) return;
+
+    const shuffledFonts = shuffleArray(fonts);
+    let index = 0;
+
+    intervalRef.current = setInterval(() => {
+      controls.start({
+        fontFamily: shuffledFonts[index],
+        transition: { duration: 0.1, ease: "linear" },
+      });
+      index = (index + 1) % shuffledFonts.length;
+    }, 500);
+  };
+
+  const stopFontCycle = () => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+    // Do NOT reset fontFamily; leave the last font as permanent
+  };
+
   return (
     <>
       <style jsx global>{`
-        @import url("https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap");
-        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
-        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
-        @import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
-        @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap");
-        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
-        @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap");
-        @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap");
-        @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
-        @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap");
-        /* ... (you can later lazy-load others for performance) */
-
         .nav-hover::before,
         .nav-hover::after {
           content: "";
@@ -111,18 +117,10 @@ export default function Navbar() {
           background: linear-gradient(to right, #8b5cf6, #ec4899, #6366f1);
           transition: width 0.4s ease;
         }
-        .nav-hover::before {
-          bottom: 0;
-          left: 0;
-        }
-        .nav-hover::after {
-          top: 0;
-          right: 0;
-        }
+        .nav-hover::before { bottom: 0; left: 0; }
+        .nav-hover::after { top: 0; right: 0; }
         .nav-hover:hover::before,
-        .nav-hover:hover::after {
-          width: 100%;
-        }
+        .nav-hover:hover::after { width: 100%; }
         .nav-hover:hover {
           background: linear-gradient(
             90deg,
@@ -131,19 +129,9 @@ export default function Navbar() {
           );
           border-radius: 10px;
         }
-
-        .icon-hover {
-          transition: all 0.3s ease;
-        }
-        .icon-hover:hover {
-          transform: scale(1.3);
-          color: #000;
-          fill: #000;
-        }
-        .dark .icon-hover:hover {
-          color: #fff;
-          fill: #fff;
-        }
+        .icon-hover { transition: all 0.3s ease; }
+        .icon-hover:hover { transform: scale(1.3); color: #000; fill: #000; }
+        .dark .icon-hover:hover { color: #fff; fill: #fff; }
       `}</style>
 
       <nav
@@ -154,23 +142,18 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-6xl mx-auto px-6 h-full flex justify-between items-center relative">
-          {/* Logo */}
           <motion.h1
-            onMouseEnter={() => setIsHoveringLogo(true)}
-            onMouseLeave={() => setIsHoveringLogo(false)}
-            onClick={() =>
-              document
-                .getElementById("hero")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-            style={{ fontFamily: fonts[fontIndex] }}
+            onClick={() => document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" })}
+            animate={controls}
+            onHoverStart={startFontCycle}
+            onHoverEnd={stopFontCycle}
             whileHover={{
               scale: 1.5,
               textShadow:
                 "0px 0px 30px rgba(167, 139, 250, 1), 0px 0px 50px rgba(236, 72, 153, 0.9)",
             }}
             whileTap={{ scale: 0.9 }}
-            className={`cursor-pointer font-bold transition-all duration-300 ${
+            className={`hoverable cursor-pointer font-bold transition-all duration-300 ${
               scrolled ? "text-lg" : "text-xl"
             } text-gray-900 dark:text-white select-none`}
           >
@@ -181,12 +164,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-4">
             <ul className="flex space-x-4">
               {navItems.map(({ name, id, icon: Icon }) => (
-                <motion.li
-                  key={id}
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="relative group"
-                >
+                <motion.li key={id} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }} className="relative group">
                   <a
                     href={`#${id}`}
                     className={`relative flex items-center justify-center text-center font-medium px-4 py-2 min-w-[90px] transition-all duration-300 ${
@@ -197,25 +175,15 @@ export default function Navbar() {
                         : "text-gray-700 dark:text-gray-300"
                     }`}
                   >
-                    <span
-                      className={`transition-all duration-300 ${
-                        scrolled ? "hidden opacity-0" : "inline opacity-100"
-                      }`}
-                    >
+                    <span className={`transition-all duration-300 ${scrolled ? "hidden opacity-0" : "inline opacity-100"}`}>
                       {name}
                     </span>
-
                     <span
                       className={`absolute transition-all duration-300 flex items-center justify-center ${
                         scrolled ? "opacity-100" : "opacity-0"
                       }`}
                     >
-                      <Icon
-                        size={scrolled ? 20 : 18}
-                        className={`transition-all duration-300 ${
-                          scrolled ? "icon-hover" : ""
-                        }`}
-                      />
+                      <Icon size={scrolled ? 20 : 18} className={`transition-all duration-300 ${scrolled ? "icon-hover" : ""}`} />
                     </span>
                   </a>
                 </motion.li>
@@ -225,23 +193,12 @@ export default function Navbar() {
             {/* Theme toggle */}
             <motion.button
               onClick={toggleTheme}
-              whileHover={{
-                scale: 1.5,
-                rotate: 20,
-                backgroundColor:
-                  theme === "dark"
-                    ? "rgba(255,255,255,0.1)"
-                    : "rgba(0,0,0,0.05)",
-              }}
+              whileHover={{ scale: 1.5, rotate: 20, backgroundColor: theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)" }}
               whileTap={{ scale: 0.9 }}
               className="p-2 rounded-full border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
               aria-label="Toggle theme"
             >
-              {theme === "dark" ? (
-                <Sun className="w-5 h-5 text-yellow-400" />
-              ) : (
-                <Moon className="w-5 h-5 text-gray-800" />
-              )}
+              {theme === "dark" ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-gray-800" />}
             </motion.button>
           </div>
 
