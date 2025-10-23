@@ -126,6 +126,8 @@ export default function Navbar() {
               scale: 1.5,
               textShadow:
                 "0px 0px 30px rgba(167, 139, 250, 1), 0px 0px 50px rgba(236, 72, 153, 0.9)",
+              y: [0, -15, 0, 15, 0], // floating effect
+              transition: { y: { repeat: Infinity, duration: 2, ease: "easeInOut" } },
             }}
             whileTap={{ scale: 0.9 }}
             className={`hoverable cursor-pointer font-bold transition-all duration-300 ${
@@ -134,6 +136,7 @@ export default function Navbar() {
           >
             Abrar Khan
           </motion.h1>
+
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-4">
