@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Moon, Sun, Menu, X, Home, User, Folder, Mail } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -9,6 +9,18 @@ export default function Navbar() {
   const [theme, setTheme] = useState("dark");
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [fontIndex, setFontIndex] = useState(0); // Default font (Tourney)
+  const cycleIntervalRef = useRef(null);
+  const [isHoveringLogo, setIsHoveringLogo] = useState(false);
+
+  // Font list (50 fonts)
+  const fonts = [
+    "Tourney", "Montserrat", "Roboto", "Lobster", "Raleway", "Poppins", "Oswald", "Playfair Display", "Bebas Neue", "Merriweather",
+    "Pacifico", "Caveat", "Cinzel", "Comfortaa", "Dancing Script", "Exo 2", "Fira Sans", "Great Vibes", "Indie Flower", "Inconsolata",
+    "Josefin Sans", "Kanit", "Lato", "Manrope", "Mukta", "Noto Sans", "Orbitron", "Open Sans", "PT Sans", "Quicksand",
+    "Righteous", "Rubik", "Saira", "Satisfy", "Signika", "Slabo 27px", "Teko", "Titillium Web", "Ubuntu", "Varela Round",
+    "Zilla Slab", "Arvo", "Asap", "Baloo 2", "Barlow", "Cardo", "Chivo", "Crimson Text", "Domine", "Work Sans"
+  ];
 
   // Scroll shrink & shadow
   useEffect(() => {
@@ -51,6 +63,23 @@ export default function Navbar() {
 
   const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
+  // Continuous font cycling on hover
+  useEffect(() => {
+    if (isHoveringLogo) {
+      // Clear any existing interval before starting a new one
+      clearInterval(cycleIntervalRef.current);
+
+      cycleIntervalRef.current = setInterval(() => {
+        setFontIndex((prev) => (prev + 1) % fonts.length); // continuous looping
+      }, 200); // change every 200ms
+    } else {
+      // Stop cycling on hover end
+      clearInterval(cycleIntervalRef.current);
+    }
+
+    return () => clearInterval(cycleIntervalRef.current);
+  }, [isHoveringLogo]);
+
   const navItems = [
     { name: "Home", id: "hero", icon: Home },
     { name: "About", id: "about", icon: User },
@@ -61,7 +90,18 @@ export default function Navbar() {
   return (
     <>
       <style jsx global>{`
-        /* Dual-line hover effect (for text items only) */
+        @import url("https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap");
+        /* ... (you can later lazy-load others for performance) */
+
         .nav-hover::before,
         .nav-hover::after {
           content: "";
@@ -92,7 +132,6 @@ export default function Navbar() {
           border-radius: 10px;
         }
 
-        /* Icon hover fill effect (when scrolled) */
         .icon-hover {
           transition: all 0.3s ease;
         }
@@ -117,26 +156,26 @@ export default function Navbar() {
         <div className="max-w-6xl mx-auto px-6 h-full flex justify-between items-center relative">
           {/* Logo */}
           <motion.h1
+            onMouseEnter={() => setIsHoveringLogo(true)}
+            onMouseLeave={() => setIsHoveringLogo(false)}
             onClick={() =>
               document
                 .getElementById("hero")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
+            style={{ fontFamily: fonts[fontIndex] }}
             whileHover={{
               scale: 1.5,
               textShadow:
                 "0px 0px 30px rgba(167, 139, 250, 1), 0px 0px 50px rgba(236, 72, 153, 0.9)",
-              y: [0, -15, 0, 15, 0], // floating effect
-              transition: { y: { repeat: Infinity, duration: 2, ease: "easeInOut" } },
             }}
             whileTap={{ scale: 0.9 }}
-            className={`hoverable cursor-pointer font-bold transition-all duration-300 ${
+            className={`cursor-pointer font-bold transition-all duration-300 ${
               scrolled ? "text-lg" : "text-xl"
             } text-gray-900 dark:text-white select-none`}
           >
             Abrar Khan
           </motion.h1>
-
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-4">
@@ -158,7 +197,6 @@ export default function Navbar() {
                         : "text-gray-700 dark:text-gray-300"
                     }`}
                   >
-                    {/* Text (visible before scroll) */}
                     <span
                       className={`transition-all duration-300 ${
                         scrolled ? "hidden opacity-0" : "inline opacity-100"
@@ -167,7 +205,6 @@ export default function Navbar() {
                       {name}
                     </span>
 
-                    {/* Icon (visible after scroll) */}
                     <span
                       className={`absolute transition-all duration-300 flex items-center justify-center ${
                         scrolled ? "opacity-100" : "opacity-0"

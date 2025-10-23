@@ -2,9 +2,9 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Bitcount_Grid_Single } from "next/font/google";
+import { Zen_Tokyo_Zoo } from "next/font/google";
 
-const bitcountFont = Bitcount_Grid_Single({ weight: "400", subsets: ["latin"] });
+const zenTokyoZooFont = Zen_Tokyo_Zoo({ weight: "400", subsets: ["latin"] });
 
 export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,12 +28,13 @@ export default function Preloader() {
             clipPath: "circle(0% at 50% 50%)",
             transition: { duration: 1.2, ease: [0.76, 0, 0.24, 1] },
           }}
-          style={{ backgroundColor: "black" }} // stays solid black
+          style={{ backgroundColor: "black" }}
         >
           <div className="flex gap-6">
             {name.map((letter, i) => (
               <motion.span
                 key={i}
+                initial={{ opacity: 0, scale: 0.8 }} // <-- start invisible
                 animate={{
                   opacity: [0, 1, 0],
                   scale: [0.8, 1.5, 0.8],
@@ -45,7 +46,7 @@ export default function Preloader() {
                   repeatDelay: (name.length - 1) * 0.192,
                   ease: "easeInOut",
                 }}
-                className={`${bitcountFont.className} text-5xl md:text-7xl font-bold text-white`}
+                className={`${zenTokyoZooFont.className} text-5xl md:text-7xl font-bold text-white`}
                 style={{
                   textShadow:
                     "0 0 25px rgba(168, 85, 247, 1), 0 0 50px rgba(168, 85, 247, 0.8)",
