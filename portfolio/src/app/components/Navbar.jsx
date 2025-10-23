@@ -61,16 +61,35 @@ export default function Navbar() {
   ];
 
   const fonts = [
-    "Abril Fatface", "Acme", "Alfa Slab One", "Amatic SC", "Anton", "Arimo", "Asap", "Bebas Neue",
-    "Bitter", "Bree Serif", "Cabin", "Cairo", "Candal", "Catamaran", "Changa", "Cinzel", "Comfortaa",
-    "Concert One", "Cormorant Garamond", "Crete Round", "DM Sans", "DM Serif Display", "Dosis", "EB Garamond",
-    "Exo 2", "Fira Sans", "Fjalla One", "Francois One", "Fredoka One", "Glegoo", "Hind", "IBM Plex Sans",
-    "Inconsolata", "Indie Flower", "Inter", "Julius Sans One", "Josefin Sans", "Kanit", "Karla", "Krona One",
-    "Lato", "Lora", "Lobster", "Muli", "Merriweather", "Mukta", "Noto Sans", "Noto Serif", "Nunito", "Open Sans",
-    "Oswald", "Overpass", "Oxygen", "Pacifico", "Patua One", "Playfair Display", "Poppins", "PT Sans", "PT Serif",
-    "Quicksand", "Raleway", "Red Hat Display", "Righteous", "Roboto", "Roboto Condensed", "Roboto Slab", "Rokkitt",
-    "Rubik", "Sacramento", "Sanchez", "Signika", "Slabo 27px", "Spectral", "Teko", "Tinos", "Titillium Web",
-    "Ubuntu", "Varela Round", "Vollkorn", "Work Sans", "Yanone Kaffeesatz", "Yeseva One", "Zilla Slab"
+    // 🖋️ Cursive / Handwritten
+    "Dancing Script", "Pacifico", "Great Vibes", "Satisfy", "Parisienne",
+    "Sacramento", "Allura", "Yellowtail", "Courgette", "Alex Brush",
+    "Marck Script", "Clicker Script", "Italianno", "Cookie", "Rochester",
+    "Lobster Two", "Molle", "Mr De Haviland", "Yesteryear", "Gloria Hallelujah",
+
+    // 🔊 Loud / Bold / Impact
+    "Anton", "Bebas Neue", "Oswald", "Black Ops One", "Bangers",
+    "Alfa Slab One", "Ultra", "League Gothic", "Fredoka One", "Monoton",
+    "Graduate", "Archivo Black", "Big Shoulders Display", "Passion One",
+    "Lilita One", "Changa One", "Limelight", "Rubik Mono One", "Viga", "Righteous",
+
+    // 🕴️ Formal / Serif
+    "Playfair Display", "Merriweather", "Lora", "Libre Baskerville", "Cormorant Garamond",
+    "EB Garamond", "Crimson Pro", "Spectral", "Prata", "Cardo",
+    "DM Serif Display", "Noto Serif", "Cinzel", "Alegreya", "Domine",
+    "Old Standard TT", "Vidaloka", "Fauna One", "Arvo", "Roboto Slab",
+
+    // 😄 Informal / Fun / Comic
+    "Comic Neue", "Chewy", "Indie Flower", "Amatic SC", "Patrick Hand",
+    "Caveat", "Coming Soon", "Reenie Beanie", "Just Another Hand", "Covered By Your Grace",
+    "Architects Daughter", "Rock Salt", "Short Stack", "Permanent Marker", "Shadows Into Light",
+    "Walter Turncoat", "Schoolbell", "Gochi Hand", "Kalam", "Neucha",
+
+    // 🚀 Futuristic / Tech
+    "Orbitron", "Audiowide", "Exo 2", "Rajdhani", "Michroma",
+    "Quantico", "Syncopate", "Oxanium", "Righteous", "Gruppo",
+    "Chivo Mono", "Jockey One", "Teko", "Barlow Condensed", "Saira Semi Condensed",
+    "Black Han Sans", "Quanty", "Tomorrow", "Russo One", "Krona One"
   ];
 
 
