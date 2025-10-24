@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import "./footer.css"; // 👈 add this line
 
 export default function Footer() {
   return (
@@ -18,7 +19,7 @@ export default function Footer() {
             href="https://github.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+            className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors icon-wobble"
           >
             <FaGithub />
           </a>
@@ -26,13 +27,13 @@ export default function Footer() {
             href="https://linkedin.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+            className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors icon-wobble"
           >
             <FaLinkedin />
           </a>
           <a
             href="mailto:your@email.com"
-            className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+            className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors icon-wobble"
           >
             <FaEnvelope />
           </a>

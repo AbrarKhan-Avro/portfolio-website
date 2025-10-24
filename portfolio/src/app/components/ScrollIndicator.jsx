@@ -49,7 +49,7 @@ export default function ScrollIndicator() {
           onMouseLeave={() => setHovered(false)}
         >
           <motion.div
-            className="w-1 rounded-full bg-black dark:bg-white"
+            className="w-1 rounded-full bg-purple-900 dark:bg-purple-500"
             style={{
               height: thumbHeight,
               y: thumbY,
