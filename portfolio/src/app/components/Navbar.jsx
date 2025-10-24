@@ -127,27 +127,69 @@ export default function Navbar() {
   return (
     <>
       <style jsx global>{`
-        .nav-hover::before,
-        .nav-hover::after {
-          content: "";
+        .nav-animated {
+          position: relative;
+          width: 130px;
+          height: 45px;
+          background: none;
+          border: none;
+          color: inherit;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: transform 0.3s, color 0.3s;
+        }
+        .nav-animated:hover {
+          transform: scale(1.05);
+        }
+        .nav-svg {
           position: absolute;
-          height: 2px;
-          width: 0;
-          background: linear-gradient(to right, #8b5cf6, #ec4899, #6366f1);
-          transition: width 0.4s ease;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
         }
-        .nav-hover::before { bottom: 0; left: 0; }
-        .nav-hover::after { top: 0; right: 0; }
-        .nav-hover:hover::before,
-        .nav-hover:hover::after { width: 100%; }
-        .nav-hover:hover {
-          background: linear-gradient(
-            90deg,
-            rgba(147, 51, 234, 0.15),
-            rgba(236, 72, 153, 0.15)
-          );
-          border-radius: 10px;
+        .nav-svg rect {
+          fill: none;
+          stroke-linecap: round;
         }
+        @keyframes outer-dashoffset {
+          0% { stroke-dashoffset: 0; stroke-dasharray: 130 130; }
+          50% { stroke-dasharray: 80 180; }
+          100% { stroke-dashoffset: 260; stroke-dasharray: 130 130; }
+        }
+        .nav-line--outer {
+          stroke-dasharray: 130 130;
+          stroke-dashoffset: 0;
+          animation: outer-dashoffset infinite linear 6s;
+          stroke-width: 4;
+          stroke: #a855f7;
+        }
+        @keyframes inner-dashoffset {
+          0% { stroke-dashoffset: 0; stroke-dasharray: 130 130; }
+          50% { stroke-dasharray: 80 180; }
+          100% { stroke-dashoffset: -260; stroke-dasharray: 130 130; }
+        }
+        .nav-line--inner {
+          stroke-dashoffset: 0;
+          stroke-dasharray: 130 130;
+          animation: inner-dashoffset infinite 5s;
+          stroke-width: 2;
+          stroke: #ec4899;
+        }
+        .nav-content {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 500;
+        }/* Pause animation on hover */
+          .nav-animated:hover .nav-line--outer,
+          .nav-animated:hover .nav-line--inner {
+            animation-play-state: paused;
+          }
         .icon-hover { transition: all 0.3s ease; }
         .icon-hover:hover { transform: scale(1.3); color: #000; fill: #000; }
         .dark .icon-hover:hover { color: #fff; fill: #fff; }
@@ -183,27 +225,79 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-4">
             <ul className="flex space-x-4">
               {navItems.map(({ name, id, icon: Icon }) => (
-                <motion.li key={id} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }} className="relative group">
+                <motion.li
+                  key={id}
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative group"
+                >
                   <a
                     href={`#${id}`}
-                    className={`relative flex items-center justify-center text-center font-medium px-4 py-2 min-w-[90px] transition-all duration-300 ${
-                      !scrolled ? "nav-hover" : ""
-                    } ${
-                      activeSection === id
-                        ? "text-purple-600 dark:text-purple-400"
-                        : "text-gray-700 dark:text-gray-300"
-                    }`}
+                    className="relative flex items-center justify-center text-center font-medium px-4 py-2 min-w-[90px] transition-all duration-300"
                   >
-                    <span className={`transition-all duration-300 ${scrolled ? "hidden opacity-0" : "inline opacity-100"}`}>
-                      {name}
-                    </span>
-                    <span
-                      className={`absolute transition-all duration-300 flex items-center justify-center ${
-                        scrolled ? "opacity-100" : "opacity-0"
+                    {/* Full view text with SVG hover */}
+                    <div
+                      className={`nav-animated absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+                        scrolled ? "opacity-0 pointer-events-none" : "opacity-100"
+                      } ${
+                        activeSection === id
+                          ? "text-purple-600 dark:text-purple-400"
+                          : "text-gray-700 dark:text-gray-300"
                       }`}
                     >
-                      <Icon size={scrolled ? 20 : 18} className={`transition-all duration-300 ${scrolled ? "icon-hover" : ""}`} />
-                    </span>
+                      <svg className="nav-svg" viewBox="0 0 130 45" xmlns="http://www.w3.org/2000/svg">
+                        <rect
+                          className={`nav-line nav-line--outer ${
+                            id === "hero"
+                              ? "stroke-purple-800 dark:stroke-purple-200"
+                              : id === "about"
+                              ? "stroke-blue-950 dark:stroke-blue-200"
+                              : id === "projects"
+                              ? "stroke-amber-950 dark:stroke-amber-100"
+                              : id === "contact"
+                              ? "stroke-green-950 dark:stroke-green-100"
+                              : ""
+                          }`}
+                          x="2"
+                          y="2"
+                          width="126"
+                          height="41"
+                          rx="15"
+                        />
+                        <rect
+                          className={`nav-line nav-line--inner ${
+                            id === "hero"
+                              ? "stroke-rose-950 dark:stroke-pink-300"
+                              : id === "about"
+                              ? "stroke-teal-800 dark:stroke-teal-300"
+                              : id === "projects"
+                              ? "stroke-yellow-800 dark:stroke-yellow-300"
+                              : id === "contact"
+                              ? "stroke-lime-900 dark:stroke-lime-300"
+                              : ""
+                          }`}
+                          x="2"
+                          y="2"
+                          width="126"
+                          height="41"
+                          rx="15"
+                        />
+                      </svg>
+                      <div className="nav-content">{name}</div>
+                    </div>
+
+                    {/* Scrolled view icons */}
+                    <div
+                      className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+                        scrolled ? "opacity-100" : "opacity-0 pointer-events-none"
+                      } ${
+                        activeSection === id
+                          ? "text-purple-600 dark:text-purple-400"
+                          : "text-gray-700 dark:text-gray-300"
+                      }`}
+                    >
+                      <Icon size={20} className="transition-all duration-300 icon-hover" />
+                    </div>
                   </a>
                 </motion.li>
               ))}
