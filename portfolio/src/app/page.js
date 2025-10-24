@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import PageTransition from "./components/PageTransition";
 import ParticleBackground from "./components/ParticleBackground";
+import ScrollIndicator from "./components/ScrollIndicator";
 
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
       <ScrollToTop />
       <PageTransition />
       <ParticleBackground /> {/* shared global background */}
+      <ScrollIndicator />
     </main>
   );
 }
