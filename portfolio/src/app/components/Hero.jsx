@@ -96,7 +96,7 @@ export default function Hero() {
         >
           <motion.h1
             variants={fadeVariant}
-            className="text-6xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 dark:from-purple-400 dark:via-pink-500 dark:to-red-400"
+            className="font-lobster text-6xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 dark:from-purple-400 dark:via-pink-500 dark:to-red-400"
           >
             Abrar Khan
           </motion.h1>
@@ -119,16 +119,74 @@ export default function Hero() {
               repeat={Infinity}
             />
           </motion.div>
+            <motion.a
+              variants={fadeVariant}
+              href="#projects"
+              className="relative group w-[200px] h-[60px] mt-2"
+            >
+              {/* 3D Flip Button CSS */}
+              <style global jsx>{`
+                .flip-btn {
+                  position: relative;
+                  width: 200px;
+                  height: 60px;
+                  transform-style: preserve-3d;
+                  transform: perspective(1000px) rotateX(0deg);
+                  transition: transform 4s;
+                }
 
-          <motion.a
-            variants={fadeVariant}
-            href="#projects"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-white font-medium shadow-lg hover:shadow-pink-500/50 transition"
-          >
-            View My Work
-          </motion.a>
+                .flip-btn:hover {
+                  transform: perspective(1000px) rotateX(360deg);
+                }
+
+                .flip-btn span {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #000;
+                  background: rgba(168, 85, 247, 0.8);
+                  text-transform: uppercase;
+                  font-size: 18px;
+                  letter-spacing: 2px;
+                  border: 2px solid #000;
+                  box-sizing: border-box;
+                  transition: 0.5s;
+                  border-radius: 0.75rem; /* Slight rounding for smooth corners */
+                  box-shadow: inset 0 20px 50px rgba(0, 0, 0, 0.2);
+                }
+
+                .flip-btn:hover span {
+                  color: #fff;
+                  background: rgba(168, 85, 247, 0.8); /* Tailwind purple-500 tone */
+                  border-color: rgba(236, 72, 153, 0.8); /* Tailwind pink-500 tone */
+                }
+
+                .flip-btn span:nth-child(1) {
+                  transform: rotateX(360deg) translateZ(30px);
+                }
+                .flip-btn span:nth-child(2) {
+                  transform: rotateX(270deg) translateZ(30px);
+                }
+                .flip-btn span:nth-child(3) {
+                  transform: rotateX(180deg) translateZ(30px);
+                }
+                .flip-btn span:nth-child(4) {
+                  transform: rotateX(90deg) translateZ(30px);
+                }
+              `}</style>
+
+              <div className="flip-btn">
+                <span>View My Work</span>
+                <span>View My Work</span>
+                <span>View My Work</span>
+                <span>View My Work</span>
+              </div>
+            </motion.a>
         </motion.div>
       </div>
 

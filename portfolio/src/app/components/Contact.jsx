@@ -109,7 +109,7 @@ export default function Contact() {
         >
           <motion.h2
             variants={fadeVariant}
-            className="text-4xl font-bold mb-8 text-zinc-900 dark:text-white transition-colors duration-500"
+            className="font-lobster text-4xl font-bold mb-8 text-zinc-900 dark:text-white transition-colors duration-500"
           >
             Get In Touch
           </motion.h2>

@@ -108,7 +108,7 @@ export default function Projects() {
         >
           <motion.h2
             variants={fadeVariant}
-            className="text-4xl font-bold text-zinc-900 dark:text-white mb-12"
+            className="font-lobster text-4xl font-bold text-zinc-900 dark:text-white mb-12"
           >
             My Projects
           </motion.h2>

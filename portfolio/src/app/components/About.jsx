@@ -98,7 +98,7 @@ export default function About() {
             transition={{ delay: 0.2 }}
             className="text-center md:text-left"
           >
-            <h2 className="text-4xl font-bold mb-6 text-zinc-900 dark:text-white">
+            <h2 className="font-lobster text-4xl font-bold mb-6 text-zinc-900 dark:text-white">
               About Me
             </h2>
             <p className="text-zinc-700 dark:text-gray-400 leading-relaxed mb-4">

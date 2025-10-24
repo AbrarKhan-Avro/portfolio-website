@@ -7,7 +7,12 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Arimo', 'sans-serif'],      // Normal body text
+        lobster: ['Lobster', 'cursive'],    // Titles
+      },
+    },
   },
   plugins: [],
 };
