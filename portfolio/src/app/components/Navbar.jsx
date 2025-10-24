@@ -162,7 +162,7 @@ export default function Navbar() {
       >
         <div className="max-w-6xl mx-auto px-6 h-full flex justify-between items-center relative">
           <motion.h1
-            onClick={() => document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
             animate={controls}
             onHoverStart={startFontCycle}
             onHoverEnd={stopFontCycle}
