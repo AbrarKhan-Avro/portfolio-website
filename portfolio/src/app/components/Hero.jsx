@@ -68,7 +68,7 @@ export default function Hero() {
     >
       {/* Animated Gradient Background */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-purple-200 via-pink-300 to-rose-100 dark:from-purple-800 dark:via-fuchsia-900 dark:to-rose-950"
+        className="absolute inset-0 bg-gradient-to-br from-purple-300 via-pink-100 to-fuchsia-300 dark:from-purple-900 dark:via-pink-700 dark:to-fuchsia-950"
         animate={{
           backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
         }}
@@ -149,7 +149,7 @@ export default function Hero() {
                   align-items: center;
                   justify-content: center;
                   color: #000;
-                  background: rgba(168, 85, 247, 0.8);
+                  background: rgba(176, 28, 147, 1);
                   text-transform: uppercase;
                   font-size: 18px;
                   letter-spacing: 2px;
@@ -162,8 +162,8 @@ export default function Hero() {
 
                 .flip-btn:hover span {
                   color: #fff;
-                  background: rgba(168, 85, 247, 0.8); /* Tailwind purple-500 tone */
-                  border-color: rgba(236, 72, 153, 0.8); /* Tailwind pink-500 tone */
+                  background: rgba(227, 79, 198, 0.8);
+                  border-color: rgba(236, 72, 153, 0.8);
                 }
 
                 .flip-btn span:nth-child(1) {

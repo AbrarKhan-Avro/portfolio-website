@@ -90,7 +90,7 @@ export default function Contact() {
     >
       {/* Animated Gradient Background */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-green-100 via-emerald-200 to-lime-300 dark:from-green-950 dark:via-emerald-900 dark:to-lime-900 -z-10"
+        className="absolute inset-0 bg-gradient-to-br from-green-300 via-emerald-100 to-lime-300 dark:from-green-950 dark:via-emerald-700 dark:to-lime-900 -z-10"
         animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
         transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
         style={{ backgroundSize: "300% 300%", filter: "blur(60px)" }}
