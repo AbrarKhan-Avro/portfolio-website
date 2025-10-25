@@ -1,0 +1,102 @@
+.cube-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px;
+}
+
+.box-card {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: cube-rotate 15s infinite linear;
+}
+
+.face {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid #646cff;
+  backface-visibility: visible;
+}
+
+.face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+/* Optional zoom on hover */
+.face:hover img {
+  transform: scale(1.05);
+}
+
+/* 3D positioning */
+.front {
+  transform: translateZ(150px);
+}
+.back {
+  transform: translateZ(-150px) rotateY(180deg);
+}
+.right {
+  transform: translateX(150px) rotateY(90deg);
+}
+.left {
+  transform: translateX(-150px) rotateY(-90deg);
+}
+.top {
+  transform: translateY(-150px) rotateX(90deg);
+}
+.bottom {
+  transform: translateY(150px) rotateX(-90deg);
+}
+
+/* Rotation animation */
+@keyframes cube-rotate {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: rotateX(90deg) rotateY(90deg);
+  }
+  50% {
+    transform: rotateX(180deg) rotateY(180deg);
+  }
+  75% {
+    transform: rotateX(270deg) rotateY(270deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .box-card {
+    width: 200px;
+    height: 200px;
+  }
+
+  .front {
+    transform: translateZ(100px);
+  }
+  .back {
+    transform: translateZ(-100px) rotateY(180deg);
+  }
+  .right {
+    transform: translateX(100px) rotateY(90deg);
+  }
+  .left {
+    transform: translateX(-100px) rotateY(-90deg);
+  }
+  .top {
+    transform: translateY(-100px) rotateX(90deg);
+  }
+  .bottom {
+    transform: translateY(100px) rotateX(-90deg);
+  }
+}

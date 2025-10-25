@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
+import Cube from "./Cube"; // 👈 import the cube component
 
 export default function About() {
   const controls = useAnimation();
@@ -86,11 +87,7 @@ export default function About() {
           className="grid md:grid-cols-2 gap-10 items-center"
         >
           <motion.div variants={fadeVariant} className="flex justify-center">
-            <img
-              src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=500"
-              alt="Abrar Khan"
-              className="w-64 h-64 md:w-80 md:h-80 rounded-2xl object-cover shadow-lg shadow-blue-500/20"
-            />
+            <Cube />
           </motion.div>
 
           <motion.div
