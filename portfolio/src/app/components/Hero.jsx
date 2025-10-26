@@ -96,11 +96,13 @@ export default function Hero() {
           }}
           className="flex flex-col items-center"
         >
+          <br />
+          <br />
           <WaveText
             text="Abrar Khan"
             className="relative z-10 font-lobster text-6xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 dark:from-purple-400 dark:via-pink-500 dark:to-red-400"
           />
-
+          <br />
           <motion.div
             variants={fadeVariant}
             className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8"
