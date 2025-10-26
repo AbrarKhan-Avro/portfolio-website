@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, useAnimationFrame } from "framer-motion";
 
 export default function WaveText({ text, className = "" }) {
   const [waveSlider, setWaveSlider] = useState(0); // 0-100 slider
@@ -20,8 +20,23 @@ export default function WaveText({ text, className = "" }) {
   ];
 
   // Map slider 0-100 to duration (0 = frozen, higher = faster)
-  const mapWaveSpeed = (val) => (val === 0 ? 0 : 0.5 + (100 - val) * 0.05); 
-  const mapGlowSpeed = (val) => (val === 0 ? 0 : 2 + (100 - val) * 0.16);
+  // Map slider 0-100 to duration (lower duration = faster wave)
+  const mapWaveSpeed = (val) => {
+    if (val === 0) return 0; // frozen
+    const normalized = val / 100; // 0–1
+    const minDuration = 0.5; // fastest
+    const maxDuration = 4;   // slowest
+    return maxDuration - normalized * (maxDuration - minDuration);
+  };
+
+  // Map slider 0-100 to glow duration
+  const mapGlowSpeed = (val) => {
+    if (val === 0) return 0;
+    const normalized = val / 100;
+    const minDuration = 2; // fastest glow cycle
+    const maxDuration = 10;   // slowest
+    return maxDuration - normalized * (maxDuration - minDuration);
+  };
 
   const waveSpeed = mapWaveSpeed(waveSlider);
   const glowSpeed = mapGlowSpeed(glowSlider);
@@ -30,43 +45,60 @@ export default function WaveText({ text, className = "" }) {
     <div className="flex flex-col items-center space-y-6">
       {/* Wave Text */}
       <h1 className={`flex justify-center ${className}`}>
-        {text.split("").map((char, index) => (
-          <motion.span
-            key={`${char}-${index}-${waveSpeed}-${glowSpeed}`} // force re-render on speed change
-            className="inline-block text-gray-800 dark:text-gray-200"
-            style={{ display: "inline-block" }}
-            animate={{
-              y: waveSpeed === 0 ? "0%" : ["0%", "-20%", "0%"],
-              textShadow:
-                glowSpeed === 0
-                  ? `0 0 0px transparent`
-                  : glowColors.map(
-                      (c) => `0 0 8px ${c}, 0 0 16px ${c}, 0 0 24px ${c}`
-                    ),
-            }}
-            transition={{
-              y:
-                waveSpeed === 0
-                  ? {}
-                  : {
-                      duration: waveSpeed,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: index * 0.1,
-                    },
-              textShadow:
-                glowSpeed === 0
-                  ? {}
-                  : {
-                      duration: glowSpeed,
-                      repeat: Infinity,
-                      ease: "linear",
-                    },
-            }}
-          >
-            {char === " " ? "\u00A0" : char}
-          </motion.span>
-        ))}
+        {text.split("").map((char, index) => {
+          const y = useMotionValue(0);
+          const waveAmplitude = 20; // max vertical movement
+
+          useAnimationFrame((t) => {
+            if (waveSpeed === 0) return;
+            const speedFactor = 1 / waveSpeed; // smaller duration = faster
+            const wave = Math.sin((t / 1000) * (2 * Math.PI * speedFactor) + index * 0.4);
+            y.set(wave * waveAmplitude);
+          });
+
+          const textShadow = useMotionValue(`0 0 0px transparent`);
+          useAnimationFrame((t) => {
+            if (glowSpeed === 0) return;
+            const speedFactor = 1 / glowSpeed;
+            const glowPhase = ((t / 1000) * speedFactor) % 1; // cycles 0–1 smoothly
+            const colorIndex = Math.floor(glowPhase * (glowColors.length - 1));
+            const nextIndex = (colorIndex + 1) % glowColors.length;
+
+            // Compute fractional blend between current and next color
+            const blend = glowPhase * (glowColors.length - 1) - colorIndex;
+
+            const interpolateColor = (c1, c2, t) => {
+              const parse = (hex) =>
+                hex
+                  .replace("#", "")
+                  .match(/.{2}/g)
+                  .map((x) => parseInt(x, 16));
+              const [r1, g1, b1] = parse(c1);
+              const [r2, g2, b2] = parse(c2);
+              const r = Math.round(r1 + (r2 - r1) * t);
+              const g = Math.round(g1 + (g2 - g1) * t);
+              const b = Math.round(b1 + (b2 - b1) * t);
+              return `rgb(${r}, ${g}, ${b})`;
+            };
+
+            const c = interpolateColor(glowColors[colorIndex], glowColors[nextIndex], blend);
+            textShadow.set(`0 0 8px ${c}, 0 0 16px ${c}, 0 0 24px ${c}`);
+          });
+
+          return (
+            <motion.span
+              key={`${char}-${index}`}
+              className="inline-block text-gray-800 dark:text-gray-200"
+              style={{
+                y,
+                textShadow,
+                display: "inline-block",
+              }}
+            >
+              {char === " " ? "\u00A0" : char}
+            </motion.span>
+          );
+        })}
       </h1>
 
       {/* Sliders */}
