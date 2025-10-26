@@ -11,6 +11,8 @@ import { TypeAnimation } from "react-type-animation";
 import { FiChevronDown } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import WaveText from "./WaveText";
+
 
 export default function Hero() {
   const controls = useAnimation();
@@ -94,12 +96,10 @@ export default function Hero() {
           }}
           className="flex flex-col items-center"
         >
-          <motion.h1
-            variants={fadeVariant}
-            className="font-lobster text-6xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 dark:from-purple-400 dark:via-pink-500 dark:to-red-400"
-          >
-            Abrar Khan
-          </motion.h1>
+          <WaveText
+            text="Abrar Khan"
+            className="relative z-10 font-lobster text-6xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 dark:from-purple-400 dark:via-pink-500 dark:to-red-400"
+          />
 
           <motion.div
             variants={fadeVariant}

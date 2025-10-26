@@ -13,7 +13,7 @@ export default function Cube() {
       if (isHovered) {
         // rotate by a small amount each frame
         rotation.current.x += 0.5; // adjust speed
-        rotation.current.y += 0.5;
+        rotation.current.y += 1;
         cubeRef.current.style.transform = `rotateX(${rotation.current.x}deg) rotateY(${rotation.current.y}deg)`;
       }
       frameId = requestAnimationFrame(rotate);

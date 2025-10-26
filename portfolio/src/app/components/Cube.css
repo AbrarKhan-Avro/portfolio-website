@@ -20,8 +20,13 @@
   height: 100%;
   border-radius: 12px;
   overflow: hidden;
-  border: 2px solid #646cff;
+  border: 2px solid #339cff;
   backface-visibility: hidden;
+}
+
+.dark .face {
+  border: 2px solid #001a33;
+;
 }
 
 .face img {
