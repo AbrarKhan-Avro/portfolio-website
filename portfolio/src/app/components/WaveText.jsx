@@ -77,6 +77,10 @@ export default function WaveText({ text, className = "" }) {
             Wave
           </label>
           <div className="relative w-full">
+            {/* Dynamic Value */}
+            <div className="absolute right-0 -top-5 text-sm text-gray-600 dark:text-gray-300">
+              {waveSlider}
+            </div>
             <input
               type="range"
               min="0"
@@ -105,6 +109,10 @@ export default function WaveText({ text, className = "" }) {
             Glow
           </label>
           <div className="relative w-full">
+            {/* Dynamic Value */}
+            <div className="absolute right-0 -top-5 text-sm text-gray-600 dark:text-gray-300">
+              {glowSlider}
+            </div>
             <input
               type="range"
               min="0"
