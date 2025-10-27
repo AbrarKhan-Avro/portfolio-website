@@ -1,0 +1,51 @@
+/* ContactTitleHover.css — fixed version */
+
+/* Wrapper */
+.get-in-touch-hover {
+  display: inline-flex;
+  gap: 0.02em;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+/* Each letter */
+.get-in-touch-hover .cth-letter {
+  display: inline-block;
+  position: relative;
+  transform-origin: center;
+  transition:
+    transform 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    color 0.3s ease,
+    -webkit-text-stroke-color 0.3s ease;
+  /* Start hollow (transparent fill + stroke visible) */
+  color: transparent;
+  -webkit-text-stroke-width: 1.6px;
+  -webkit-text-stroke-color: #111; /* light mode stroke */
+}
+
+/* Dark mode: use lighter stroke */
+.dark .get-in-touch-hover .cth-letter {
+  -webkit-text-stroke-color: #fff;
+}
+
+/* Hover: fill the letter, remove stroke, scale */
+.get-in-touch-hover .cth-letter:hover,
+.get-in-touch-hover .cth-letter:focus {
+  transform: scale(1.5);
+  color: currentColor; /* fill with inherited color */
+  -webkit-text-stroke-color: transparent; /* remove outline */
+}
+
+/* Slight neighbor response (optional subtle bounce) */
+.get-in-touch-hover .cth-letter:hover + .cth-letter {
+  transform: scale(1.1);
+}
+
+/* Responsive tweak */
+@media (max-width: 640px) {
+  .get-in-touch-hover .cth-letter {
+    -webkit-text-stroke-width: 1.2px;
+  }
+}

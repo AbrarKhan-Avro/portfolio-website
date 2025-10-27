@@ -9,6 +9,8 @@ import {
 } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useState, useEffect } from "react";
+import "./ContactTitleEffect.css"; // 👈 Add this import at the top, near other imports
+
 
 export default function Contact() {
   const controls = useAnimation();
@@ -111,7 +113,19 @@ export default function Contact() {
             variants={fadeVariant}
             className="font-lobster text-4xl font-bold mb-8 text-zinc-900 dark:text-white transition-colors duration-500"
           >
-            Get In Touch
+            <span className="get-in-touch-hover" aria-hidden="false" role="text">
+              {"Get In Touch".split("").map((ch, i) => (
+                <span
+                  key={i}
+                  className="cth-letter"
+                  data-char={ch}
+                  tabIndex={0} /* makes it keyboard-focusable for accessibility */
+                  aria-hidden={ch === " " ? "true" : "false"}
+                >
+                  {ch === " " ? "\u00A0" : ch}
+                </span>
+              ))}
+            </span>
           </motion.h2>
 
           <motion.p
