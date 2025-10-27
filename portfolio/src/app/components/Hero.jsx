@@ -99,7 +99,7 @@ export default function Hero() {
           <br />
           <br />
           <WaveText
-            text="Abrar Khan"
+            text="Abrar's Webspace"
             className="relative z-10 font-lobster text-6xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 dark:from-purple-400 dark:via-pink-500 dark:to-red-400"
           />
           <br />

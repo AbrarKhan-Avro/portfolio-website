@@ -60,3 +60,90 @@ html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
+
+
+/* --- Clipped halves: ensure they exactly match h2 metrics --- */
+.clip-top,
+.clip-bottom {
+  display: block;           /* occupy full inline width */
+  width: 100%;
+  white-space: nowrap;      /* keep the heading single-line */
+  line-height: 1;           /* consistent vertical metrics */
+  font-family: inherit;     /* use same font as <h2> */
+  font-size: inherit;       /* inherit size so spans align perfectly */
+  transform-origin: center;
+  pointer-events: none;
+}
+
+/* top half clip */
+.clip-top {
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+  z-index: 30;              /* above reveal */
+  color: inherit;           /* uses the heading color classes */
+}
+
+/* bottom half clip */
+.clip-bottom {
+  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+  z-index: 30;
+  color: inherit;
+}
+
+/* --- Reveal: full-width centered flex box for exact alignment --- */
+.reveal {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;                  /* FULL width so centering lines up with the halves */
+  transform: translateY(-50%) scaleY(0); /* start hidden via vertical scale */
+  transform-origin: center;
+  display: flex;
+  justify-content: center;      /* center horizontally within same bounding box */
+  align-items: center;          /* center vertically inside the heading line box */
+  white-space: nowrap;          /* keep "Abrar Khan" one line */
+  font-family: 'Fugaz One';         /* exact font metrics with the heading */
+  font-size: 0.4em;            /* tuned small size relative to h2 */
+  line-height: 1;
+  padding: 4px 10px;            /* compact label padding */
+  letter-spacing: 0.08em;       /* subtle spacing to avoid wrap but not too wide */
+  background: #ffeb3b;          /* reveal highlight (kept from earlier) */
+  color: #000;
+  border-radius: 6px;
+  box-sizing: border-box;
+  z-index: 20;                  /* below the clipped halves so it appears between them */
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Hover / focus reveal behavior */
+.group:hover .reveal,
+.group:focus-within .reveal {
+  transform: translateY(-50%) scaleY(1);
+}
+
+/* Move the split halves on hover (keeps your previous motion) */
+.group:hover .clip-top,
+.group:focus-within .clip-top {
+  transform: translateY(-12px);
+}
+.group:hover .clip-bottom,
+.group:focus-within .clip-bottom {
+  transform: translateY(12px);
+}
+/* base group: allow color transition (even if instant, we use delay on reverse) */
+/* hide base text immediately on hover */
+.group:hover .base-text,
+.group:focus-within .base-text {
+  color: transparent !important;
+  transition: color 0s; /* hide instantly */
+}
+
+/* delay returning to visible after hover ends */
+.base-text {
+  transition: color 0s linear 0.25s; /* 0.25s delay before reappearing */
+}
+
+/* small dark-mode tweak if you want */
+@media (prefers-color-scheme: dark) {
+  .reveal { background: #ffd54f; color: #000; }
+}

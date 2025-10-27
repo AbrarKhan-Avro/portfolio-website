@@ -95,9 +95,19 @@ export default function About() {
             transition={{ delay: 0.2 }}
             className="text-center md:text-left"
           >
-            <h2 className="font-lobster text-4xl font-bold mb-6 text-zinc-900 dark:text-white">
-              About Me
+            <h2 className="font-lobster text-4xl font-bold mb-6 relative inline-block group select-none">
+              <span className="base-text text-zinc-900 dark:text-white">About Me</span>
+              <span className="absolute inset-0 z-30 clip-top pointer-events-none transition-transform duration-500 ease-in-out group-hover:-translate-y-3 text-zinc-900 dark:text-white">
+                About Me
+              </span>
+              <span className="absolute inset-0 z-30 clip-bottom pointer-events-none transition-transform duration-500 ease-in-out group-hover:translate-y-3 text-zinc-900 dark:text-white">
+                About Me
+              </span>
+              <span className="absolute left-0 top-1/2 w-full z-20 reveal origin-center transition-transform duration-500 ease-in-out">
+                Abrar Khan
+              </span>
             </h2>
+
             <p className="text-zinc-700 dark:text-gray-400 leading-relaxed mb-4">
               Hello! I'm <span className="font-semibold">Abrar Khan</span> — a
               web developer passionate about crafting interactive, beautiful,

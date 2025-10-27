@@ -95,7 +95,7 @@ export default function CustomCursor() {
     <>
       {/* Outer big glow */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 rounded-full bg-purple-500/5 blur-[120px] z-[9998]"
+        className="pointer-events-none fixed top-0 left-0 rounded-full bg-purple-800/10 dark:bg-purple-200/10 blur-[120px] z-[9998]"
         style={{
           width: 400,
           height: 400,
@@ -108,7 +108,7 @@ export default function CustomCursor() {
 
       {/* Inner glow */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 rounded-full bg-purple-400/10 blur-[60px] mix-blend-lighten z-[9999]"
+        className="pointer-events-none fixed top-0 left-0 rounded-full bg-purple-900/20 dark:bg-purple-300/10 blur-[60px] mix-blend-lighten z-[9999]"
         style={{
           width: 150,
           height: 150,

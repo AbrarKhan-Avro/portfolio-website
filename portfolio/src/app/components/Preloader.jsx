@@ -16,7 +16,7 @@ export default function Preloader() {
     return () => clearTimeout(timer);
   }, []);
 
-  const name = "ABRAR KHAN".split("");
+  const name = "KHAN".split("");
 
   return (
     <AnimatePresence>
