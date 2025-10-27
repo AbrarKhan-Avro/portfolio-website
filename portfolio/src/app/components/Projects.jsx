@@ -9,6 +9,8 @@ import {
 } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
+import SparkText from "./SparkText"; // add near top with other imports
+
 
 const projects = [
   {
@@ -107,11 +109,12 @@ export default function Projects() {
           className="flex flex-col items-center w-full"
         >
           <motion.h2
-            variants={fadeVariant}
-            className="font-lobster text-4xl font-bold text-zinc-900 dark:text-white mb-12"
-          >
-            My Projects
-          </motion.h2>
+  variants={fadeVariant}
+  className="font-lobster text-4xl font-bold text-zinc-900 dark:text-white mb-12"
+>
+  <SparkText text="My Projects" />
+</motion.h2>
+
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl w-full">
             {projects.map((p, i) => (

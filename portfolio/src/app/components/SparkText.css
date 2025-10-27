@@ -1,0 +1,30 @@
+.spark-text {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.spark-text span {
+  display: inline-block;
+  transition: transform 0.9s ease, opacity 0.9s ease;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+.spark-text.disperse span {
+  transform: perspective(1000px)
+    translateX(calc(var(--rx, 0) * 1px))
+    translateY(calc(var(--ry, 0) * 1px))
+    translateZ(calc(var(--rz, 0) * 1px))
+    rotateX(calc(var(--rXdeg, 0) * 1deg))
+    rotateY(calc(var(--rYdeg, 0) * 1deg));
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spark-text span,
+  .spark-text.disperse span {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
