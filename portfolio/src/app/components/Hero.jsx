@@ -107,19 +107,34 @@ export default function Hero() {
             variants={fadeVariant}
             className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8"
           >
-            <TypeAnimation
-              sequence={[
-                "Web Developer",
-                2000,
-                "Designer",
-                2000,
-                "Storyteller",
-                2000,
-              ]}
-              wrapper="span"
-              speed={40}
-              repeat={Infinity}
-            />
+            <div className="flex items-center justify-center">
+              <TypeAnimation
+                sequence={[
+                  "Web Developer",
+                  2000,
+                  "Designer",
+                  2000,
+                  "Storyteller",
+                  2000,
+                ]}
+                wrapper="span"
+                speed={30}
+                repeat={Infinity}
+                cursor={false} // disable the default "|"
+              />
+              <span className="custom-cursor ml-1">_</span>
+
+              <style jsx>{`
+                .custom-cursor {
+                  color: #ffd54f;
+                  animation: blink 1s infinite;
+                }
+                @keyframes blink {
+                  0%, 50%, 100% { opacity: 1; }
+                  25%, 75% { opacity: 0; }
+                }
+              `}</style>
+            </div>
           </motion.div>
             <motion.a
               variants={fadeVariant}

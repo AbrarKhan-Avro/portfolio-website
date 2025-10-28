@@ -147,3 +147,10 @@ body::-webkit-scrollbar {
 @media (prefers-color-scheme: dark) {
   .reveal { background: #ffd54f; color: #000; }
 }
+
+
+/* example.css */
+.TypeAnimation__cursor {
+  color: black; /* change to your desired color */
+  font-weight: 600; /* optional */
+}
