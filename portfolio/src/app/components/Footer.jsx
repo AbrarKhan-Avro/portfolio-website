@@ -2,9 +2,81 @@
 
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
-import "./footer.css"; // 👈 add this line
+import { useEffect } from "react";
+import "./footer.css";
 
 export default function Footer() {
+  useEffect(() => {
+    // Decode animation script
+    function decodeText() {
+      const text = document.querySelector(".decode-text");
+      if (!text) return;
+
+      const state = [];
+      for (let i = 0; i < text.children.length; i++) {
+        text.children[i].classList.remove("state-1", "state-2", "state-3");
+        state[i] = i;
+      }
+
+      const shuffled = shuffle(state);
+      for (let i = 0; i < shuffled.length; i++) {
+        const child = text.children[shuffled[i]];
+        const classes = child.classList;
+        const state1Time = Math.round(Math.random() * (2000 - 300)) + 50;
+        if (classes.contains("text-animation")) {
+          setTimeout(() => firstStages(child), state1Time);
+        }
+      }
+    }
+
+    function firstStages(child) {
+      if (child.classList.contains("state-2")) {
+        child.classList.add("state-3");
+      } else if (child.classList.contains("state-1")) {
+        child.classList.add("state-2");
+      } else if (!child.classList.contains("state-1")) {
+        child.classList.add("state-1");
+        setTimeout(() => secondStages(child), 100);
+      }
+    }
+
+    function secondStages(child) {
+      if (child.classList.contains("state-1")) {
+        child.classList.add("state-2");
+        setTimeout(() => thirdStages(child), 100);
+      } else if (!child.classList.contains("state-1")) {
+        child.classList.add("state-1");
+      }
+    }
+
+    function thirdStages(child) {
+      if (child.classList.contains("state-2")) {
+        child.classList.add("state-3");
+      }
+    }
+
+    function shuffle(array) {
+      let currentIndex = array.length,
+        temporaryValue,
+        randomIndex;
+      while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+      return array;
+    }
+
+    decodeText();
+    const interval = setInterval(decodeText, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Split your paragraph text into spans
+  const footerText = "© " + new Date().getFullYear() + " Abrar Khan — All Rights Reserved";
+
   return (
     <footer className="bg-gray-300 dark:bg-zinc-950 py-10 text-amber-600 dark:text-amber-300 text-center border-t border-gray-300 dark:border-zinc-800 transition-colors duration-500">
       <motion.div
@@ -39,8 +111,17 @@ export default function Footer() {
           </a>
         </div>
 
-        <p className="text-sm">
-          © {new Date().getFullYear()} Abrar Khan — All Rights Reserved
+        {/* 👇 Decode Animation Paragraph */}
+        <p className="text-sm decode-text">
+          {footerText.split("").map((char, i) =>
+            char === " " ? (
+              <span key={i} className="space"></span>
+            ) : (
+              <span key={i} className="text-animation">
+                {char}
+              </span>
+            )
+          )}
         </p>
       </motion.div>
     </footer>
