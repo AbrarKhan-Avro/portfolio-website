@@ -147,3 +147,48 @@ body::-webkit-scrollbar {
 @media (prefers-color-scheme: dark) {
   .reveal { background: #ffd54f; color: #000; }
 }
+
+
+/* Scrollbar customization for .scrollbox */
+/* Thin scrollbar for Firefox */
+.scrollbox {
+  scrollbar-width: thin;
+  /* Firefox: thumb color (light mode) / track transparent */
+  scrollbar-color: #998a00 transparent;
+}
+
+/* WebKit (Chrome, Edge, Safari) */
+.scrollbox::-webkit-scrollbar {
+  width: 6px;               /* thinner scrollbar */
+  height: 6px;
+}
+
+.scrollbox::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbox::-webkit-scrollbar-thumb {
+  background-color: #998a00; /* light-mode thumb: #998a00 */
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background-color .15s ease;
+}
+
+/* Hover feedback (light mode) */
+.scrollbox:hover::-webkit-scrollbar-thumb {
+  background-color: #b39f00; /* slightly brighter on hover */
+}
+
+/* Dark mode: use #ffeb3b as thumb for contrast */
+.dark .scrollbox {
+  scrollbar-color: #ffeb3b transparent; /* Firefox dark mode */
+}
+
+.dark .scrollbox::-webkit-scrollbar-thumb {
+  background-color: #ffeb3b; /* dark-mode thumb: #ffeb3b */
+}
+
+.dark .scrollbox:hover::-webkit-scrollbar-thumb {
+  background-color: #fff350; /* slightly brighter hover in dark mode */
+}

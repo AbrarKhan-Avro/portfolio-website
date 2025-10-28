@@ -108,13 +108,19 @@ export default function About() {
               </span>
             </h2>
 
-            <p className="text-zinc-700 dark:text-gray-400 leading-relaxed mb-4">
-              Hello! I'm <span className="font-semibold">Abrar Khan</span> — a
-              web developer passionate about crafting interactive, beautiful,
-              and functional digital experiences. I love combining design and
-              technology to bring ideas to life with a touch of creativity and
-              precision.
-            </p>
+            <div className="scrollbox max-h-[350px] overflow-y-auto pr-3 relative cursor-none">
+              <p className="text-zinc-700 dark:text-gray-300 leading-relaxed">
+                Hello! I'm <span className="font-semibold">Abrar Khan</span> — a web developer with a love for turning imagination into interactive, beautiful, and functional digital experiences. I see the web as my playground — a place where design meets technology and ideas come alive through creativity, motion, and code. I enjoy building things that don’t just work well but also feel alive, engaging, and thoughtfully crafted.
+                <br /><br />
+                I’m a natural problem solver who enjoys thinking beyond the usual patterns and finding clever, out-of-the-box ways to bring ideas to life. I’m fueled by curiosity, creativity, and a never-give-up attitude — always ready to dive into new challenges and explore uncharted territory. Punctual, persistent, and full of imagination, I approach every project like an adventure — one that’s equal parts logic, artistry, and pure excitement.
+                <br /><br />
+                My journey into web development began with a spark of curiosity — one “what if I try this?” moment that turned into an endless exploration of creativity and code. What started as simple experiments soon grew into a passion for building things that connect, inspire, and tell stories through interactivity.
+                <br /><br />
+                Right now, I’m fascinated by the world of 3D and immersive web experiences — pushing beyond flat screens to create spaces that feel dynamic and alive. I love finding ways to blend storytelling with technology, where each click or scroll reveals something unexpected and delightful.
+                <br /><br />
+                When I’m not deep in code, I’m usually sketching ideas, watching creative films, or exploring design inspirations that spark new directions. I’m endlessly curious about how imagination and technology can work together — and I’m always chasing that next “aha!” moment where everything just clicks.
+              </p>
+            </div>
           </motion.div>
         </motion.div>
       </div>

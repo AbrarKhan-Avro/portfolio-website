@@ -166,7 +166,7 @@ export default function Hero() {
                   align-items: center;
                   justify-content: center;
                   color: #000;
-                  background: rgba(176, 28, 147, 1);
+                  background: #ffeb3b;
                   text-transform: uppercase;
                   font-size: 18px;
                   letter-spacing: 2px;
@@ -179,8 +179,8 @@ export default function Hero() {
 
                 .flip-btn:hover span {
                   color: #fff;
-                  background: rgba(227, 79, 198, 0.8);
-                  border-color: rgba(236, 72, 153, 0.8);
+                  background: #fff066;
+                  border-color: #332d00;
                 }
 
                 .flip-btn span:nth-child(1) {
