@@ -49,3 +49,15 @@
     -webkit-text-stroke-width: 1.2px;
   }
 }
+
+.typing-cursor {
+  display: inline-block;
+  width: 1ch;
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

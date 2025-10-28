@@ -9,8 +9,9 @@ import {
 } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useState, useEffect } from "react";
-import "./ContactTitleEffect.css"; // 👈 Add this import at the top, near other imports
+import "./ContactTitleEffect.css";
 
+const reloadKey = Date.now();
 
 export default function Contact() {
   const controls = useAnimation();
@@ -28,7 +29,6 @@ export default function Contact() {
 
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
-
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,22 +36,40 @@ export default function Contact() {
     setTimeout(() => setSubmitted(false), 3000);
   };
 
+  // 🔹 Typing effect setup
+  const fullText = "Have a project in mind, or just want to say hello? Fill out the form below — I’d love to hear from you.";
+  const [displayText, setDisplayText] = useState("");
+
+  useEffect(() => {
+    // Detect a real page reload — force remount each time
+    const isReload = performance.getEntriesByType("navigation")[0]?.type === "reload";
+
+    if (isReload || inView) {
+      setDisplayText("");
+      let i = 0;
+      const typingInterval = setInterval(() => {
+        setDisplayText(fullText.slice(0, i + 1));
+        i++;
+        if (i === fullText.length) clearInterval(typingInterval);
+      }, 25);
+
+      return () => clearInterval(typingInterval);
+    }
+  }, [inView, fullText]);
+
+
   // Parallax Motion values
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
-  // viewport state (safe defaults)
   const [viewport, setViewport] = useState({ width: 1, height: 1 });
 
   useEffect(() => {
-    // handlers
     const updateViewport = () => {
       setViewport({ width: window.innerWidth || 1, height: window.innerHeight || 1 });
     };
     updateViewport();
 
     const handleMouseMove = (e) => {
-      // set pointer coordinates
       x.set(e.clientX);
       y.set(e.clientY);
     };
@@ -73,16 +91,14 @@ export default function Contact() {
     };
   }, [x, y]);
 
-  // map pointer to small rotation values (prevent NaN by using viewport defaults)
   const rotateX = useTransform(y, [0, viewport.height || 1], [8, -8]);
   const rotateY = useTransform(x, [0, viewport.width || 1], [-8, 8]);
-
-  // smooth the motion with springs to remove jitter
   const smoothX = useSpring(rotateX, { stiffness: 80, damping: 20 });
   const smoothY = useSpring(rotateY, { stiffness: 80, damping: 20 });
 
   return (
     <motion.section
+      key={reloadKey}
       ref={ref}
       id="contact"
       variants={fadeVariant}
@@ -90,7 +106,6 @@ export default function Contact() {
       animate={controls}
       className="relative min-h-screen flex flex-col items-center justify-center px-6 py-24 overflow-hidden transition-colors duration-700"
     >
-      {/* Animated Gradient Background */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-br from-green-300 via-emerald-100 to-lime-300 dark:from-green-950 dark:via-emerald-700 dark:to-lime-900 -z-10"
         animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
@@ -98,7 +113,6 @@ export default function Contact() {
         style={{ backgroundSize: "300% 300%", filter: "blur(60px)" }}
       />
 
-      {/* Content wrapper provides perspective for 3D tilt */}
       <div className="relative z-10 flex flex-col items-center w-full max-w-md" style={{ perspective: 1000 }}>
         <motion.div
           style={{
@@ -115,25 +129,21 @@ export default function Contact() {
           >
             <span className="get-in-touch-hover" aria-hidden="false" role="text">
               {"Get In Touch".split("").map((ch, i) => (
-                <span
-                  key={i}
-                  className="cth-letter"
-                  data-char={ch}
-                  tabIndex={0} /* makes it keyboard-focusable for accessibility */
-                  aria-hidden={ch === " " ? "true" : "false"}
-                >
+                <span key={i} className="cth-letter" data-char={ch} tabIndex={0}>
                   {ch === " " ? "\u00A0" : ch}
                 </span>
               ))}
             </span>
           </motion.h2>
 
+          {/* 🔹 Typing effect applied here */}
           <motion.p
             variants={fadeVariant}
             transition={{ delay: 0.1 }}
             className="text-zinc-700 dark:text-gray-400 text-center mb-10 transition-colors duration-500"
           >
-            Have a project in mind, or just want to say hello? Fill out the form below — I’d love to hear from you.
+            {displayText}
+            <span className="typing-cursor">|</span>
           </motion.p>
 
           <motion.form
