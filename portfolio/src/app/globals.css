@@ -154,7 +154,7 @@ body::-webkit-scrollbar {
 .scrollbox {
   scrollbar-width: thin;
   /* Firefox: thumb color (light mode) / track transparent */
-  scrollbar-color: #998a00 transparent;
+  scrollbar-color: #ff9900 transparent;
 }
 
 /* WebKit (Chrome, Edge, Safari) */
@@ -168,7 +168,7 @@ body::-webkit-scrollbar {
 }
 
 .scrollbox::-webkit-scrollbar-thumb {
-  background-color: #998a00; /* light-mode thumb: #998a00 */
+  background-color: #ff9900; /* light-mode thumb: #998a00 */
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: padding-box;
@@ -177,7 +177,7 @@ body::-webkit-scrollbar {
 
 /* Hover feedback (light mode) */
 .scrollbox:hover::-webkit-scrollbar-thumb {
-  background-color: #b39f00; /* slightly brighter on hover */
+  background-color: #ffc266; /* slightly brighter on hover */
 }
 
 /* Dark mode: use #ffeb3b as thumb for contrast */
@@ -191,4 +191,77 @@ body::-webkit-scrollbar {
 
 .dark .scrollbox:hover::-webkit-scrollbar-thumb {
   background-color: #fff350; /* slightly brighter hover in dark mode */
+}
+
+
+.section-navigate {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.section-navigate.is--inactive {
+  opacity: 0;
+}
+
+.section-navigate__items::before {
+  content: "";
+  width: 1px;
+  height: 180%;
+  background: linear-gradient(transparent 0, black 20%, black 80%, transparent);
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dark .section-navigate__items::before {
+  background: linear-gradient(transparent 0, white 20%, white 80%, transparent);
+}
+
+.section-navigate__link {
+  position: relative;
+  text-decoration: none;
+}
+
+.section-navigate__link::before {
+  content: "꘏";
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  line-height: 26px;
+  color: #ff9900;
+  position: relative;
+  left: 2px;
+  transition: all 0.3s ease;
+}
+
+.dark .section-navigate__link::before {
+  color: #ffeb3b;
+}
+
+.section-navigate__link.is--active::before {
+  font-size: 20px;
+  left: 0;
+}
+
+.section-navigate__name {
+  position: absolute;
+  top: 5px;
+  right: 23px;
+  color: #fcd34d;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 2px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.section-navigate__link:hover .section-navigate__name {
+  opacity: 1;
+}
+
+.section-navigate__name {
+  font-family: 'Fugaz One', cursive;
 }

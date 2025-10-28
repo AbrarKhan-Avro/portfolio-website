@@ -24,8 +24,8 @@ export default function ScrollToTop() {
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className="
         fixed bottom-6 right-6 p-3 rounded-full shadow-lg transition 
-        bg-purple-600 hover:bg-purple-700 text-white
-        dark:bg-purple-400 dark:hover:bg-purple-500 dark:text-zinc-900
+        bg-amber-600 hover:bg-amber-800 text-white
+        dark:bg-amber-300 dark:hover:bg-amber-500 dark:text-zinc-900
       "
     >
       <ArrowUp size={20} />

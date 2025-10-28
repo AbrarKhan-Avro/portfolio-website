@@ -166,7 +166,7 @@ export default function Hero() {
                   align-items: center;
                   justify-content: center;
                   color: #000;
-                  background: #ffeb3b;
+                  background: #fcd34d;
                   text-transform: uppercase;
                   font-size: 18px;
                   letter-spacing: 2px;

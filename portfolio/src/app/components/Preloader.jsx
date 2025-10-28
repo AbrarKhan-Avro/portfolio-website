@@ -49,7 +49,7 @@ export default function Preloader() {
                 className={`${zenTokyoZooFont.className} text-5xl md:text-7xl font-bold text-white`}
                 style={{
                   textShadow:
-                    "0 0 25px rgba(168, 85, 247, 1), 0 0 50px rgba(168, 85, 247, 0.8)",
+                    "0 0 25px rgba(252, 211, 77, 1), 0 0 50px rgba(252, 211, 77, 0.8)",
                 }}
               >
                 {letter}

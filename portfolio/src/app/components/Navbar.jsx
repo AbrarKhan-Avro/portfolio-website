@@ -216,7 +216,7 @@ export default function Navbar() {
             whileTap={{ scale: 0.9 }}
             className={`hoverable cursor-pointer font-bold transition-all duration-300 ${
               scrolled ? "text-lg" : "text-xl"
-            } text-gray-900 dark:text-white select-none`}
+            } text-amber-600 dark:text-amber-300 select-none`}
           >
             Abrar Khan
           </motion.h1>
@@ -292,7 +292,7 @@ export default function Navbar() {
                         scrolled ? "opacity-100" : "opacity-0 pointer-events-none"
                       } ${
                         activeSection === id
-                          ? "text-purple-600 dark:text-purple-400"
+                          ? "text-amber-600 dark:text-amber-300"
                           : "text-gray-700 dark:text-gray-300"
                       }`}
                     >
