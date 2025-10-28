@@ -265,3 +265,21 @@ body::-webkit-scrollbar {
 .section-navigate__name {
   font-family: 'Fugaz One', cursive;
 }
+
+.typing-cursor {
+  display: inline-block;
+  width: 1ch;
+  font-weight: bold;
+  color: #ffd54f;
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.scrollbox p {
+  white-space: pre-wrap;
+}

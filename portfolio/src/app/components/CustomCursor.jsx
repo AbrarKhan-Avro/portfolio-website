@@ -14,16 +14,18 @@ export default function CustomCursor() {
   const [cursorSize, setCursorSize] = useState(24);
   const [isHovering, setIsHovering] = useState(false);
   const [isText, setIsText] = useState(false);
-  const [ripples, setRipples] = useState([]); // store active ripples
-  const [isClicking, setIsClicking] = useState(false); // NEW: hold-click ring
+  const [ripples, setRipples] = useState([]);
+  const [isClicking, setIsClicking] = useState(false);
 
   useEffect(() => {
+    // Track cursor position using pointer events (works during scrollbar drag)
     const moveCursor = (e) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
     };
-    window.addEventListener("mousemove", moveCursor);
+    window.addEventListener("pointermove", moveCursor, { passive: true });
 
+    // Hover effects
     const hoverStart = () => {
       setIsHovering(true);
       setCursorSize(40);
@@ -33,6 +35,7 @@ export default function CustomCursor() {
       setCursorSize(24);
     };
 
+    // Text input effects
     const textStart = () => {
       setIsText(true);
       setCursorSize(12);
@@ -42,21 +45,22 @@ export default function CustomCursor() {
       setCursorSize(isHovering ? 40 : 24);
     };
 
+    // Click ripple effect
     const handleClick = (e) => {
       const id = Date.now();
       const x = e.clientX;
       const y = e.clientY;
       setRipples((prev) => [...prev, { id, x, y }]);
-
-      // Remove ripple after animation finishes (500ms)
       setTimeout(() => {
         setRipples((prev) => prev.filter((r) => r.id !== id));
       }, 500);
     };
 
+    // Hold click ring
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
 
+    // Attach hover listeners to interactive elements
     const hoverables = document.querySelectorAll("a, button, .hoverable");
     hoverables.forEach((el) => {
       el.addEventListener("mouseenter", hoverStart);
@@ -72,14 +76,17 @@ export default function CustomCursor() {
     });
 
     window.addEventListener("click", handleClick);
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("pointerdown", handleMouseDown);
+    window.addEventListener("pointerup", handleMouseUp);
+    window.addEventListener("pointercancel", handleMouseUp);
 
     return () => {
-      window.removeEventListener("mousemove", moveCursor);
+      window.removeEventListener("pointermove", moveCursor);
       window.removeEventListener("click", handleClick);
-      window.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("pointerdown", handleMouseDown);
+      window.removeEventListener("pointerup", handleMouseUp);
+      window.removeEventListener("pointercancel", handleMouseUp);
+
       hoverables.forEach((el) => {
         el.removeEventListener("mouseenter", hoverStart);
         el.removeEventListener("mouseleave", hoverEnd);
@@ -89,7 +96,7 @@ export default function CustomCursor() {
         el.removeEventListener("mouseleave", textEnd);
       });
     };
-  }, [cursorSize, isHovering]);
+  }, [cursorX, cursorY, cursorSize, isHovering]);
 
   return (
     <>
