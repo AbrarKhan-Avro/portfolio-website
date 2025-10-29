@@ -208,12 +208,24 @@ export default function Hero() {
       </div>
 
       <motion.div
-        animate={{ opacity: [0.6, 1, 0.6], y: [0, 10, 0] }}
+        className="absolute bottom-10 text-gray-400 text-3xl z-10 cursor-pointer"
+        animate={{ 
+          y: [0, 15, 0],       // bounce
+          opacity: [0.6, 1, 0.6], // fade in/out
+          scale: [1, 1.2, 1],   // subtle pulsing
+          textShadow: [
+            "0 0 0px rgba(255,255,255,0)", 
+            "0 0 15px rgba(255,255,255,0.7)", 
+            "0 0 0px rgba(255,255,255,0)"
+          ]
+        }}
         transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-        className="absolute bottom-10 text-gray-400 text-3xl z-10"
+        whileHover={{ scale: [1.2, 1.5, 1.2, 1.5, 1.2], color: "#fcd34d", textShadow: "0 0 20px #fcd34d", transition: { repeat: Infinity, duration: 0.8, ease: "easeInOut" } }}
+        onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
       >
         <FiChevronDown />
       </motion.div>
+
     </motion.section>
   );
 }

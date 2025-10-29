@@ -34,8 +34,10 @@ export default function Home() {
           $.scrollify({
             section: ".js--scrollify",
             sectionName: "section-name",
-            scrollSpeed: 800,
+            scrollSpeed: 500,
             easing: "easeOutExpo",
+            scrollbars: true,
+            touchScroll: true,
             // ✅ Allow normal scrolling inside the About section
             standardScrollElements: ".scrollbox",
             // ✅ Prevent blank space after footer
