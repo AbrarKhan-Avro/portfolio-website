@@ -10,6 +10,7 @@ import {
 import { useInView } from "react-intersection-observer";
 import { useState, useEffect } from "react";
 import "./ContactTitleEffect.css";
+import SpotlightButton from "./SpotlightButton";
 
 const reloadKey = Date.now();
 
@@ -188,14 +189,10 @@ export default function Contact() {
               />
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              type="submit"
-              className="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-colors duration-300"
-            >
-              {submitted ? "Message Sent!" : "Send Message"}
-            </motion.button>
+            <SpotlightButton submitted={submitted}>
+  Send Message
+</SpotlightButton>
+
           </motion.form>
         </motion.div>
       </div>

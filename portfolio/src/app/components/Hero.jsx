@@ -140,6 +140,7 @@ export default function Hero() {
               variants={fadeVariant}
               href="#projects"
               className="relative group w-[200px] h-[60px] mt-2"
+              whileTap={{ scale: 0.9 }}
             >
               {/* 3D Flip Button CSS */}
               <style global jsx>{`
@@ -166,7 +167,7 @@ export default function Hero() {
                   align-items: center;
                   justify-content: center;
                   color: #000;
-                  background: #fcd34d;
+                  background: rgb(252, 211, 77, 1);
                   text-transform: uppercase;
                   font-size: 18px;
                   letter-spacing: 2px;
@@ -179,7 +180,7 @@ export default function Hero() {
 
                 .flip-btn:hover span {
                   color: #fff;
-                  background: #fff066;
+                  background: rgb(255, 240, 102, 0.6);
                   border-color: #332d00;
                 }
 
