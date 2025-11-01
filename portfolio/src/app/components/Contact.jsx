@@ -189,9 +189,8 @@ export default function Contact() {
               />
             </div>
 
-            <SpotlightButton submitted={submitted}>
-  Send Message
-</SpotlightButton>
+            <SpotlightButton onClick={handleSubmit} formValid={form.name && form.email && form.message} />
+
 
           </motion.form>
         </motion.div>

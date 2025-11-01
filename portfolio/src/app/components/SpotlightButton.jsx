@@ -49,7 +49,7 @@ const SpotlightButton = ({ onClick, formValid }) => {
       ref={btnRef}
       onClick={handleClick}
       type="submit"
-      whileTap={{ scale: 0.985 }}
+      whileTap={{ scale: 0.8 }}
       animate={
         error
           ? {
@@ -59,7 +59,7 @@ const SpotlightButton = ({ onClick, formValid }) => {
           : { x: 0, backgroundColor: "#000000" }
       }
       transition={{ duration: error ? 0.6 : 0.3 }}
-      className="relative w-full py-3 rounded-lg overflow-hidden font-semibold text-lg text-white dark:text-black"
+      className="relative w-full py-5 rounded-lg overflow-hidden font-semibold text-lg text-black"
       style={{
         perspective: "1000px",
       }}
@@ -94,7 +94,7 @@ const SpotlightButton = ({ onClick, formValid }) => {
       {/* Spotlight */}
       <span
         ref={spanRef}
-        className="pointer-events-none absolute left-[50%] top-[50%] h-32 w-32 -translate-x-[50%] -translate-y-[50%] rounded-full bg-[#ffeb3b]"
+        className="pointer-events-none absolute left-[50%] top-[50%] h-32 w-32 -translate-x-[50%] -translate-y-[50%] rounded-full bg-gray-300 dark:bg-[#ffeb3b]"
       />
     </motion.button>
   );
