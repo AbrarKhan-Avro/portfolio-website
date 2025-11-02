@@ -249,13 +249,17 @@ body::-webkit-scrollbar {
   position: absolute;
   top: 5px;
   right: 23px;
-  color: #fcd34d;
+  color: #ff9900;
   font-size: 12px;
   text-transform: uppercase;
   font-weight: 300;
   letter-spacing: 2px;
   opacity: 0;
   transition: opacity 0.4s ease;
+}
+
+.dark .section-navigate__name {
+  color: #ffeb3b;
 }
 
 .section-navigate__link:hover .section-navigate__name {
@@ -270,8 +274,12 @@ body::-webkit-scrollbar {
   display: inline-block;
   width: 1ch;
   font-weight: bold;
-  color: #ffd54f;
+  color: #ff9900;
   animation: blink 1s step-start infinite;
+}
+
+.dark .typing-cursor {
+  color: #ffd54f;
 }
 
 @keyframes blink {

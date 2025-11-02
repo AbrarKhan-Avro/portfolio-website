@@ -126,9 +126,15 @@ export default function Hero() {
 
               <style jsx>{`
                 .custom-cursor {
-                  color: #ffd54f;
+                  color: #ff9900;
                   animation: blink 1s infinite;
                 }
+
+                :global(.dark) .custom-cursor {
+                  color: #ffeb3b;
+                }
+
+
                 @keyframes blink {
                   0%, 50%, 100% { opacity: 1; }
                   25%, 75% { opacity: 0; }
@@ -167,7 +173,7 @@ export default function Hero() {
                   align-items: center;
                   justify-content: center;
                   color: #000;
-                  background: rgb(252, 211, 77, 1);
+                  background: rgb(255, 153, 0, 1);
                   text-transform: uppercase;
                   font-size: 18px;
                   letter-spacing: 2px;
@@ -178,10 +184,18 @@ export default function Hero() {
                   box-shadow: inset 0 20px 50px rgba(0, 0, 0, 0.2);
                 }
 
+                .dark .flip-btn span {
+                  background: rgb(255, 235, 59, 1);
+                }
+
                 .flip-btn:hover span {
                   color: #fff;
-                  background: rgb(255, 240, 102, 0.6);
+                  background: rgb(255, 173, 51, 0.6);
                   border-color: #332d00;
+                }
+
+                .dark .flip-btn:hover span {
+                  background: rgb(255, 240, 102, 0.6);
                 }
 
                 .flip-btn span:nth-child(1) {
