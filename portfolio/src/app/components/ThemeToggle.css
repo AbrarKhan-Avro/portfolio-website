@@ -1,0 +1,216 @@
+/* ThemeToggle.css
+   Converted and adapted from the original SCSS Day/Night block
+*/
+
+/* base toggle container */
+.toggle {
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+  user-select: none;
+}
+
+/* hide native checkbox */
+.toggle--checkbox {
+  display: none;
+}
+
+/* sizes from original SCSS */
+.toggle--btn {
+  position: relative;
+  height: 70px; /* $toggleHeight */
+  width: 125px; /* $toggleWidth */
+  border-radius: 70px; /* rounded full */
+  display: inline-block;
+  transition: all 350ms ease-in;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* border & night colours (default) */
+.toggle--daynight .toggle--btn {
+  border: 5px solid #1c1c1c; /* $borderColor--night */
+  background-color: #3c4145; /* $bgColor--night */
+}
+
+/* the sliding knob */
+.toggle--daynight .toggle--btn::before {
+  position: absolute;
+  content: "";
+  top: 2px;
+  left: 4px;
+  width: 56px; /* $toggleBtnRadius = 70 - 14 = 56 */
+  height: 56px;
+  border-radius: 50%;
+  background-color: #fff; /* $toggleBtn-bgColor--night */
+  border: 5px solid #e3e3c7; /* $toggleBtn-borderColor--night */
+  transition: all 350ms ease-in;
+  box-sizing: border-box;
+  z-index: 20;
+}
+
+/* cloud (the :after pseudo of button) - initially hidden (opacity 0) */
+.toggle--daynight .toggle--btn::after {
+  content: "";
+  position: absolute;
+  top: 62%;
+  left: calc(125px - 56px - 10px - 10px); /* roughly: toggleWidth - toggleBtnRadius - (borderWidth*2) - 20px ~ matches SCSS */
+  z-index: 10;
+  width: calc(56px / 5);
+  height: calc(56px / 5);
+  opacity: 0;
+  background-color: #fff; /* cloud bg */
+  border-radius: 50%;
+
+  /* complex box-shadow to create cloud shapes (copied from SCSS) */
+  box-shadow:
+    #fff 0 0,
+    #fff 3px 0,
+    #fff 6px 0,
+    #fff 9px 0,
+    #fff 11px 0,
+    #fff 14px 0,
+    #fff 16px 0,
+    #fff 21px -1px 0 1px,
+    #fff 16px -7px 0 -2px,
+    #fff 7px -7px 0 1px,
+
+    /* cloud borders */
+    #d3d3d3 0 0 0 4px,
+    #d3d3d3 6px 0 0 4px,
+    #d3d3d3 11px 0 0 4px,
+    #d3d3d3 16px 0 0 4px,
+    #d3d3d3 21px -1px 0 5px,
+    #d3d3d3 16px -7px 0 1px,
+    #d3d3d3 7px -7px 0 5px;
+
+  transition: opacity 100ms ease-in;
+  z-index: 40;
+}
+
+/* stars / moon feature */
+.toggle--daynight .toggle--feature {
+  display: block;
+  position: absolute;
+  top: 9px;
+  left: 52.5%;
+  z-index: 20;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #fff;
+
+  /* star cluster using box-shadow (same as original) */
+  box-shadow:
+    rgba(255,255,255,0.1) 30px -3px 0 0,
+    rgba(255,255,255,0.1) 12px 10px 0 -1px,
+    #fff 38px 18px 0 1px,
+    rgba(255,255,255,0.1) 32px 34px 0 0,
+    #fff 20px 24px 0 -1.5px,
+    rgba(255,255,255,0.1) 5px 38px 0 1px;
+
+  animation: starry_star 5s ease-in-out infinite;
+  transition: all 250ms ease-in;
+}
+
+/* moon: small circle drawn via pseudo on .toggle--feature (original used &:before) */
+.toggle--daynight .toggle--feature::before {
+  position: absolute;
+  content: "";
+  top: -2px;
+  left: -25px;
+  width: 18px;
+  height: 18px;
+  background-color: #fff; /* toggleBtn-bgColor--night */
+  border-radius: 50%;
+  border: 5px solid #e3e3c7; /* toggleBtn-borderColor--night */
+  box-shadow:
+    #e3e3c7 -28px 0 0 -3px,
+    #e3e3c7 -8px 24px 0 -2px;
+  z-index: 50;
+  transform-origin: -100% 150%; /* more accurate pivot for the rolling effect */
+  transition: transform 350ms ease-in, left 350ms ease-in;
+
+}
+
+/* star animation keyframes (copied from SCSS) */
+@keyframes starry_star {
+  50% {
+    background-color: rgba(255,255,255,0.1);
+    box-shadow:
+      #fff 30px -3px 0 0,
+      #fff 12px 10px 0 -1px,
+      rgba(255,255,255,0.1) 38px 18px 0 1px,
+      #fff 32px 34px 0 0,
+      rgba(255,255,255,0.1) 20px 24px 0 -1.5px,
+      #fff 5px 38px 0 1px;
+  }
+}
+
+/* bounceIn for cloud: same timing as original */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  55% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform: scale(.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* WHEN CHECKED: go to DAY (light blue) */
+.toggle--daynight .toggle--checkbox:checked + .toggle--btn {
+  background-color: #9ee3fb; /* $bgColor--day */
+  border: 5px solid #86c3d7;  /* $borderColor--day */
+}
+
+/* move the knob to the right and make it yellow (sun) */
+.toggle--daynight .toggle--checkbox:checked + .toggle--btn::before {
+  left: calc(125px - 56px - 10px); /* toggleWidth - toggleBtnRadius - border*? - small offset */
+  background-color: #ffdf6d; /* $toggleBtn-bgColor--day */
+  border: 5px solid #e1c348; /* $toggleBtn-borderColor--day */
+}
+
+/* reveal the cloud (the :after pseudo) when checked */
+.toggle--daynight .toggle--checkbox:checked + .toggle--btn::after {
+  opacity: 1;
+  animation-name: bounceIn;
+  animation-duration: 0.6s;
+  animation-delay: 0.1s;
+  animation-fill-mode: backwards;
+  animation-timing-function: ease-in-out;
+}
+
+/* fade out stars when day */
+.toggle--daynight .toggle--checkbox:checked + .toggle--btn > .toggle--feature {
+  opacity: 0;
+  box-shadow:
+    rgba(255,255,255,0.1) 30px -3px 0 -4px,
+    rgba(255,255,255,0.1) 12px 10px 0 -5px,
+    #fff 38px 18px 0 -3px,
+    rgba(255,255,255,0.1) 32px 34px 0 -4px,
+    #fff 20px 24px 0 -5.5px,
+    rgba(255,255,255,0.1) 5px 38px 0 -3px;
+  animation: none;
+  transition: all 300ms ease-in;
+}
+
+/* adjust the moon pseudo (inside feature) when checked: move & rotate */
+.toggle--daynight .toggle--checkbox:checked + .toggle--btn > .toggle--feature::before {
+  left: 25px;
+  transform: rotate(70deg);
+}
+
+/* small helper: make it visually similar at small sizes if you place in navbar */
+.toggle--daynight { display: inline-flex; align-items:center; justify-content:center; }

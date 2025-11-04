@@ -291,3 +291,9 @@ body::-webkit-scrollbar {
 .scrollbox p {
   white-space: pre-wrap;
 }
+
+.theme-toggle-wrapper {
+  display: inline-block;   /* keeps it compact */
+  transform: scale(0.5);   /* 70% of original size */
+  transform-origin: center center;
+}

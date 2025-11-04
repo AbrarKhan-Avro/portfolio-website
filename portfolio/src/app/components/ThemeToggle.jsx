@@ -1,26 +1,42 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Sun, Moon } from "lucide-react";
-import { motion } from "framer-motion";
+import "./ThemeToggle.css";
 
-export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+export default function ThemeToggle({ onToggle }) {
+  // internal theme state: "dark" | "light"
+  const [theme, setTheme] = useState("dark");
 
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return null;
+  useEffect(() => {
+    // load saved theme
+    const saved = localStorage.getItem("theme");
+    if (saved) setTheme(saved);
+    else setTheme("dark");
+  }, []);
+
+  useEffect(() => {
+    if (theme === "dark") document.documentElement.classList.add("dark");
+    else document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", theme);
+
+    if (typeof onToggle === "function") onToggle(theme);
+  }, [theme, onToggle]);
+
+  const toggle = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   return (
-    <motion.button
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="p-2 rounded-full bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200 shadow-md transition"
-      aria-label="Toggle theme"
-    >
-      {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
-    </motion.button>
+    <div className="toggle toggle--daynight" aria-hidden={false}>
+      <input
+        id="toggle--daynight-navbar"
+        className="toggle--checkbox"
+        type="checkbox"
+        onChange={toggle}
+        checked={theme === "light"}
+        aria-label="Toggle day / night theme"
+      />
+      <label className="toggle--btn" htmlFor="toggle--daynight-navbar">
+        <span className="toggle--feature" />
+      </label>
+    </div>
   );
 }
