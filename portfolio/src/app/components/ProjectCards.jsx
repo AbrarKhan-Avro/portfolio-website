@@ -7,13 +7,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const allProjects = [
   { title: "Creative Portfolio", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200", link: "#" },
   { title: "E-commerce Dashboard", image: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1200", link: "#" },
-  { title: "AI Chatbot App", image: "https://images.unsplash.com/photo-1531497865144-0464ef8fb9c5?w=1200", link: "#" },
+  { title: "AI Chatbot App", image: "https://images.pexels.com/photos/11813187/pexels-photo-11813187.jpeg?_gl=1*176u2qo*_ga*MzQyMjkxMzkwLjE3NjEzODMxNjE.*_ga_8JE65Q40S6*czE3NjIyMTcwNzQkbzMkZzEkdDE3NjIyMTg1MDUkajYwJGwwJGgw", link: "#" },
   { title: "Data Visualization", image: "https://images.unsplash.com/photo-1610212570473-6015f631ae96?w=1200", link: "#" },
   { title: "Creative Web Design", image: "https://images.unsplash.com/photo-1603048675767-6e79ff5b8fc1?w=1200", link: "#" },
   { title: "Marketing Analytics", image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200", link: "#" },
-  { title: "Finance Dashboard", image: "https://images.unsplash.com/photo-1612831817884-5241c0f0b9ef?w=1200", link: "#" },
+  { title: "Finance Dashboard", image: "https://images.pexels.com/photos/5424636/pexels-photo-5424636.jpeg?_gl=1*hfhs0c*_ga*MzQyMjkxMzkwLjE3NjEzODMxNjE.*_ga_8JE65Q40S6*czE3NjIyMTcwNzQkbzMkZzEkdDE3NjIyMTg2MDckajUwJGwwJGgw", link: "#" },
   { title: "Game Landing Page", image: "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?w=1200", link: "#" },
-  { title: "3D Product Showcase", image: "https://images.unsplash.com/photo-1602526218560-74e07d1d8f61?w=1200", link: "#" },
+  { title: "3D Product Showcase", image: "https://images.pexels.com/photos/160107/pexels-photo-160107.jpeg?_gl=1*106r1lk*_ga*MzQyMjkxMzkwLjE3NjEzODMxNjE.*_ga_8JE65Q40S6*czE3NjIyMTcwNzQkbzMkZzEkdDE3NjIyMTg2NDIkajE1JGwwJGgw", link: "#" },
   { title: "Portfolio Revamp", image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200", link: "#" },
 ];
 
@@ -136,9 +136,31 @@ export default function ProjectCards() {
           const backCard = back[i] || { title: "", image: "", link: "#" };
           const isActive = i === active;
 
+          // number of half-turns: card 1 -> 1, card 2 -> 2, ...
+          const flips = i + 1;
+
+          // degrees to rotate for this card
+          const degrees = 180 * flips;
+
+          // Angular-speed constant: base time per single half-turn (FLIP_MS)
+          // total duration for this card = FLIP_MS * flips
+          const durationMs = FLIP_MS * flips;
+
+          // compute transform when rotated (vertical for active, horizontal otherwise)
+          const rotatedTransform = isActive
+            ? `rotateX(${degrees}deg)`
+            : `rotateY(${degrees}deg)`;
+
+          // when not rotated show identity (no rotation)
+          const normalTransform = "rotateY(0deg)";
+
           // compute classes
           const innerClasses = ["card-inner"];
-          if (rotated) innerClasses.push("rotated"); // rotated true => showing back face
+          if (rotated) {
+            // note: we keep classes for styling, but actual degrees are applied inline
+            if (isActive) innerClasses.push("rotated-vertical");
+            else innerClasses.push("rotated-horizontal");
+          }
           if (isAnimating) innerClasses.push("animating");
           if (clickedIndex === i) innerClasses.push("clicked");
 
@@ -156,7 +178,12 @@ export default function ProjectCards() {
             >
               <div
                 className={innerClasses.join(" ")}
-                style={{ transitionDuration: `${FLIP_MS}ms` }}
+                // inline style controls BOTH transform and transition duration per-card
+                style={{
+                  transitionDuration: `${durationMs}ms`,
+                  transitionProperty: "transform, box-shadow, filter",
+                  transform: rotated ? rotatedTransform : normalTransform,
+                }}
               >
                 <div
                   className="card-face card-front"
@@ -175,6 +202,7 @@ export default function ProjectCards() {
             </div>
           );
         })}
+
       </div>
 
       <div className="bottom-nav">
