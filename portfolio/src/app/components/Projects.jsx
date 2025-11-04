@@ -94,7 +94,6 @@ export default function Projects() {
           >
             <SparkText text="My Projects" />
           </motion.h2>
-
           
           <motion.div variants={fadeVariant}>
             <ProjectCards />
