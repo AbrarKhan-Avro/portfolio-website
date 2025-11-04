@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./ProjectCards.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import PaginationSVG from "./PaginationSVG";
 
 const allProjects = [
   {
@@ -129,25 +130,31 @@ export default function ProjectCards() {
 
       {/* Bottom Controls */}
       <div className="bottom-controls">
-        <button className="nav-btn bottom-left" onClick={handlePrev}>
-          <ChevronLeft size={28} />
+        <button
+          className="paginate left"
+          onClick={handlePrev}
+          data-state={page === 0 ? "disabled" : ""}
+        >
+          <i></i><i></i>
         </button>
 
-        <div className="indicator-dots">
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <span
-              key={i}
-              className={`dot ${i === page ? "active" : ""}`}
-              onClick={() => {
-                setDirection(i > page ? 1 : -1);
-                setPage(i);
-              }}
-            ></span>
-          ))}
-        </div>
 
-        <button className="nav-btn bottom-right" onClick={handleNext}>
-          <ChevronRight size={28} />
+        <PaginationSVG
+          totalPages={totalPages}
+          currentPage={page}
+          onPageChange={(i) => {
+            setDirection(i > page ? 1 : -1);
+            setPage(i);
+          }}
+        />
+
+
+        <button
+          className="paginate right"
+          onClick={handleNext}
+          data-state={page === totalPages - 1 ? "disabled" : ""}
+        >
+          <i></i><i></i>
         </button>
       </div>
     </div>

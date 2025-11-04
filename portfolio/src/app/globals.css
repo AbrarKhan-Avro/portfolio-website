@@ -48,7 +48,9 @@ body {
 html, body, * {
   cursor: none !important;
 }
-
+a:hover, button:hover, input:hover, *:hover {
+  cursor: none !important;
+}
 
 /* Hide scrollbar for all browsers */
 html, body {

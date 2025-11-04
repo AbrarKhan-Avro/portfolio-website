@@ -61,7 +61,7 @@ export default function CustomCursor() {
     const handleMouseUp = () => setIsClicking(false);
 
     // Attach hover listeners to interactive elements
-    const hoverables = document.querySelectorAll("a, button, .hoverable");
+    const hoverables = document.querySelectorAll("a, button, pointer, .hoverable");
     hoverables.forEach((el) => {
       el.addEventListener("mouseenter", hoverStart);
       el.addEventListener("mouseleave", hoverEnd);
