@@ -85,12 +85,16 @@ export default function Projects() {
             rotateX: smoothX,
             rotateY: smoothY,
             transformStyle: "preserve-3d",
+            pointerEvents: "none",
           }}
           className="flex flex-col items-center w-full"
         >
           <motion.h2
+          style={{
+            pointerEvents: "auto",
+          }}
             variants={fadeVariant}
-            className="font-lobster text-4xl font-bold text-zinc-900 dark:text-white mb-12"
+            className="font-lobster text-4xl font-bold text-zinc-900 dark:text-white mb-9"
           >
             <SparkText text="My Projects" />
           </motion.h2>
