@@ -18,7 +18,7 @@ export default function CustomCursor() {
   const [isClicking, setIsClicking] = useState(false);
 
   useEffect(() => {
-    // Track cursor position using pointer events (works during scrollbar drag)
+    // Track cursor position using pointer events
     const moveCursor = (e) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
@@ -26,14 +26,8 @@ export default function CustomCursor() {
     window.addEventListener("pointermove", moveCursor, { passive: true });
 
     // Hover effects
-    const hoverStart = () => {
-      setIsHovering(true);
-      setCursorSize(40);
-    };
-    const hoverEnd = () => {
-      setIsHovering(false);
-      setCursorSize(24);
-    };
+    const hoverStart = () => setIsHovering(true);
+    const hoverEnd = () => setIsHovering(false);
 
     // Text input effects
     const textStart = () => {
@@ -60,20 +54,34 @@ export default function CustomCursor() {
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
 
-    // Attach hover listeners to interactive elements
-    const hoverables = document.querySelectorAll("a, button, pointer, .hoverable");
-    hoverables.forEach((el) => {
-      el.addEventListener("mouseenter", hoverStart);
-      el.addEventListener("mouseleave", hoverEnd);
-    });
+    // -----------------------------
+    // Event delegation for hoverables
+    // -----------------------------
+    const handleMouseOver = (e) => {
+      const target = e.target.closest("a, button, pointer, .hoverable");
+      if (target) hoverStart();
+    };
 
-    const texts = document.querySelectorAll(
-      "input, textarea, [contenteditable='true']"
-    );
-    texts.forEach((el) => {
-      el.addEventListener("mouseenter", textStart);
-      el.addEventListener("mouseleave", textEnd);
-    });
+    const handleMouseOut = (e) => {
+      const target = e.target.closest("a, button, pointer, .hoverable");
+      if (target) hoverEnd();
+    };
+
+    // Text inputs delegation
+    const handleTextOver = (e) => {
+      const target = e.target.closest("input, textarea, [contenteditable='true']");
+      if (target) textStart();
+    };
+
+    const handleTextOut = (e) => {
+      const target = e.target.closest("input, textarea, [contenteditable='true']");
+      if (target) textEnd();
+    };
+
+    window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("mouseout", handleMouseOut);
+    window.addEventListener("mouseover", handleTextOver);
+    window.addEventListener("mouseout", handleTextOut);
 
     window.addEventListener("click", handleClick);
     window.addEventListener("pointerdown", handleMouseDown);
@@ -87,16 +95,16 @@ export default function CustomCursor() {
       window.removeEventListener("pointerup", handleMouseUp);
       window.removeEventListener("pointercancel", handleMouseUp);
 
-      hoverables.forEach((el) => {
-        el.removeEventListener("mouseenter", hoverStart);
-        el.removeEventListener("mouseleave", hoverEnd);
-      });
-      texts.forEach((el) => {
-        el.removeEventListener("mouseenter", textStart);
-        el.removeEventListener("mouseleave", textEnd);
-      });
+      window.removeEventListener("mouseover", handleMouseOver);
+      window.removeEventListener("mouseout", handleMouseOut);
+      window.removeEventListener("mouseover", handleTextOver);
+      window.removeEventListener("mouseout", handleTextOut);
     };
   }, [cursorX, cursorY, cursorSize, isHovering]);
+
+  useEffect(() => {
+    setCursorSize(isHovering ? 40 : 24);
+  }, [isHovering]);
 
   return (
     <>

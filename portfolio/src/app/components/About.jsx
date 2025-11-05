@@ -78,7 +78,7 @@ When I’m not deep in code, I’m usually sketching ideas, watching creative fi
       setAboutText(fullAboutText.slice(0, i + 1));
       i++;
       if (i === fullAboutText.length) clearInterval(typingInterval);
-    }, 15); // typing speed
+    }, 1); // typing speed
 
     return () => clearInterval(typingInterval);
   }, [inView, fullAboutText]);

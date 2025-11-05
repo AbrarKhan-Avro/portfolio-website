@@ -223,7 +223,7 @@ export default function Hero() {
       </div>
 
       <motion.div
-        className="absolute bottom-10 text-gray-400 text-3xl z-10 cursor-pointer"
+        className="hoverable absolute bottom-10 text-gray-400 text-3xl z-10 cursor-pointer"
         animate={{ 
           y: [0, 15, 0],       // bounce
           opacity: [0.6, 1, 0.6], // fade in/out
