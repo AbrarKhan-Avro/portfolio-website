@@ -112,7 +112,7 @@ body::-webkit-scrollbar {
   line-height: 1;
   padding: 4px 10px;            /* compact label padding */
   letter-spacing: 0.08em;       /* subtle spacing to avoid wrap but not too wide */
-  background: #ffeb3b;          /* reveal highlight (kept from earlier) */
+  background: #ffd54f;          /* reveal highlight (kept from earlier) */
   color: #000;
   border-radius: 6px;
   box-sizing: border-box;
@@ -186,13 +186,13 @@ body::-webkit-scrollbar {
   background-color: #ffc266; /* slightly brighter on hover */
 }
 
-/* Dark mode: use #ffeb3b as thumb for contrast */
+/* Dark mode: use #ffd54f as thumb for contrast */
 .dark .scrollbox {
-  scrollbar-color: #ffeb3b transparent; /* Firefox dark mode */
+  scrollbar-color: #ffd54f transparent; /* Firefox dark mode */
 }
 
 .dark .scrollbox::-webkit-scrollbar-thumb {
-  background-color: #ffeb3b; /* dark-mode thumb: #ffeb3b */
+  background-color: #ffd54f; /* dark-mode thumb: #ffd54f */
 }
 
 .dark .scrollbox:hover::-webkit-scrollbar-thumb {
@@ -243,7 +243,7 @@ body::-webkit-scrollbar {
 }
 
 .dark .section-navigate__link::before {
-  color: #ffeb3b;
+  color: #ffd54f;
 }
 
 .section-navigate__link.is--active::before {
@@ -265,7 +265,7 @@ body::-webkit-scrollbar {
 }
 
 .dark .section-navigate__name {
-  color: #ffeb3b;
+  color: #ffd54f;
 }
 
 .section-navigate__link:hover .section-navigate__name {

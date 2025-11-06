@@ -364,6 +364,14 @@ export default function ProjectCards() {
                   ›
                 </button>
               </div>
+              <a
+                href={galleryProject.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="view-project-btn"
+              >
+                View Project
+              </a>
               <button className="close-gallery" onClick={closeGallery}>
                 ✕
               </button>
