@@ -36,28 +36,6 @@ export default function ScrollSections() {
       // Show when scrolling
       $(window).on("scroll", showNavigation);
 
-      // Initialize Scrollify
-      $.scrollify({
-        section: ".js--scrollify",
-        sectionName: "section-name",
-        scrollSpeed: 800,
-        easing: "easeOutExpo",
-        interstitialSection: ".footer",
-        updateHash: true,
-        before: function (i, sections) {
-          const ref = sections[i].data("section-name");
-
-          $(".js--navigate-link").removeClass("is--active");
-          $(`.js--navigate-link[href="#${ref}"]`).addClass("is--active");
-
-          if (ref === "footer") {
-            elements.navigate.addClass("is--inactive");
-          } else {
-            elements.navigate.removeClass("is--inactive");
-          }
-        },
-      });
-
       return () => {
         $.scrollify.destroy();
         $(window).off("scroll", showNavigation);

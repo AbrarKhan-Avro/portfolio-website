@@ -32,6 +32,10 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* -----------------------
    Global Styles
 ----------------------- */

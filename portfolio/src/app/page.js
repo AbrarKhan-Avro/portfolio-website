@@ -10,89 +10,78 @@ import PageTransition from "./components/PageTransition";
 import ParticleBackground from "./components/ParticleBackground";
 
 import { useEffect } from "react";
-import $ from "jquery";
 
 export default function Home() {
   useEffect(() => {
-    // Run only in browser
     if (typeof window !== "undefined") {
-      import("jquery-scrollify").then(() => {
-        $(function () {
-          const elements = {
-            navigateLink: $(".js--navigate-link"),
-            navigate: $(".js--navigate"),
-          };
+      const $ = require("jquery");
+      const sections = $("section[id]");
+      const navLinks = $(".js--navigate-link");
 
-          // Navigation click behavior
-          elements.navigateLink.on("click", function (ev) {
-            ev.preventDefault();
-            const hash = $(this).attr("href");
-            $.scrollify.move(hash);
-          });
-
-          // Initialize Scrollify safely
-          $.scrollify({
-            section: ".js--scrollify",
-            sectionName: "section-name",
-            scrollSpeed: 500,
-            easing: "easeOutExpo",
-            scrollbars: true,
-            touchScroll: true,
-            // ✅ Allow normal scrolling inside the About section
-            standardScrollElements: ".scrollbox",
-            // ✅ Prevent blank space after footer
-            interstitialSection: "footer",
-            updateHash: true,
-            before: function (i, sections) {
-              const ref = sections[i].data("section-name");
-              $(".js--navigate-link").removeClass("is--active");
-              $(`.js--navigate-link[href="#${ref}"]`).addClass("is--active");
-
-              if (ref === "footer") {
-                elements.navigate.addClass("is--inactive");
-              } else {
-                elements.navigate.removeClass("is--inactive");
-              }
-            },
-          });
-        });
+      // ✅ Smooth scroll on dot click
+      navLinks.on("click", function (ev) {
+        ev.preventDefault();
+        const hash = $(this).attr("href");
+        const target = document.querySelector(hash);
+        if (target) target.scrollIntoView({ behavior: "smooth" });
       });
-    }
 
-    // Cleanup on unmount
-    return () => {
-      if ($.scrollify && $.scrollify.destroy) {
-        $.scrollify.destroy();
-      }
-    };
+      // ✅ Detect current section on scroll and update active dot
+      const handleScroll = () => {
+        const scrollPos = window.scrollY + window.innerHeight / 2;
+
+        let currentSection = "hero"; // fallback
+        sections.each(function () {
+          const top = $(this).offset().top;
+          const bottom = top + $(this).outerHeight();
+          if (scrollPos >= top && scrollPos < bottom) {
+            currentSection = $(this).attr("id");
+            return false; // stop loop once found
+          }
+        });
+
+        // Update active class
+        navLinks.removeClass("is--active");
+        $(`.js--navigate-link[href="#${currentSection}"]`).addClass("is--active");
+      };
+
+      window.addEventListener("scroll", handleScroll);
+      handleScroll(); // run once on load
+
+      // Cleanup
+      return () => {
+        navLinks.off("click");
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
   }, []);
 
   return (
-    <main className="overflow-hidden">
-      {/* --- Scrollify Sections --- */}
-      <section className="js--scrollify" data-section-name="hero">
+    <main className="overflow-x-hidden">
+      {/* --- Regular Scrolling Sections --- */}
+      <section id="hero" className="js--scrollify" data-section-name="hero">
         <Hero />
       </section>
 
-      <section className="js--scrollify" data-section-name="about">
+      <section id="about" className="js--scrollify" data-section-name="about">
         <About />
       </section>
 
-      <section className="js--scrollify" data-section-name="projects">
+      <section id="projects" className="js--scrollify" data-section-name="projects">
         <Projects />
       </section>
 
-      <section className="js--scrollify" data-section-name="contact">
+      <section id="contact" className="js--scrollify" data-section-name="contact">
         <Contact />
       </section>
 
-      {/* ✅ Footer is outside Scrollify’s full-height constraint */}
-      <footer data-section-name="footer">
+      {/* ✅ Footer (scrolls normally) */}
+      <footer id="footer" data-section-name="footer">
         <Footer />
       </footer>
 
       {/* --- Navigation Dots --- */}
-      <nav className="section-navigate js--navigate fixed top-1/2 -translate-y-1/2 right-5 z-[9999]">
+      <nav className="section-navigate js--navigate fixed top-1/2 -translate-y-1/2 right-5 z-[9999] transition-opacity duration-500">
         <ul className="section-navigate__items relative">
           {["hero", "about", "projects", "contact"].map((name) => (
             <li key={name} className="section-navigate__item relative mb-3">
