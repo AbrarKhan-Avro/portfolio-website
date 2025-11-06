@@ -13,8 +13,7 @@ const allProjects = [
     link: "https://example.com/creative-portfolio",
     showcase: [
       "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800",
-      "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800",
-      "https://images.unsplash.com/photo-1509228627151-3cf2b39e0f7a?w=800"
+      "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800"
     ]
   },
   {

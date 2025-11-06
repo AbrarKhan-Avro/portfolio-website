@@ -112,7 +112,7 @@ const SpotlightButton = ({ onClick, formValid }) => {
         {/* Spotlight */}
         <span
           ref={spanRef}
-          className="pointer-events-none absolute left-[50%] top-[50%] h-32 w-32 -translate-x-[50%] -translate-y-[50%] rounded-full bg-[#ff9900] dark:bg-[#ffeb3b]"
+          className="pointer-events-none absolute left-[50%] top-[50%] h-32 w-32 -translate-x-[50%] -translate-y-[50%] rounded-full bg-amber-600 dark:bg-amber-300"
         />
       </motion.button>
 
@@ -121,7 +121,7 @@ const SpotlightButton = ({ onClick, formValid }) => {
         initial={{ opacity: 0, y: -5 }}
         animate={{ opacity: showErrorMsg ? 1 : 0, y: showErrorMsg ? 0 : -5 }}
         transition={{ duration: 0.3 }}
-        className="text-[#ff9900] dark:text-[#ffeb3b] text-sm mt-2"
+        className="text-amber-600 dark:text-amber-300 text-sm mt-2"
       >
         Please fill out all fields.
       </motion.p>

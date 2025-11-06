@@ -341,8 +341,8 @@ export default function Navbar() {
                       onClick={() => setMobileOpen(false)}
                       className={`block text-lg font-medium text-center transition-colors ${
                         activeSection === id
-                          ? "text-purple-600 dark:text-purple-400"
-                          : "text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"
+                          ? "text-amber-600 dark:text-amber-300"
+                          : "text-gray-600 dark:text-gray-300 hover:text-amber-500 dark:hover:text-amber-200 hover:scale-150"
                       }`}
                     >
                       {name}

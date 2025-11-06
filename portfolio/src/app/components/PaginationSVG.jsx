@@ -86,7 +86,7 @@ export default function PaginationSVG({ totalPages, currentPage, onPageChange })
         y1={baseY}
         x2={startX}
         y2={baseY}
-        stroke="#fff"
+        className="stroke-amber-600 dark:stroke-amber-300"
         strokeWidth="10"
         strokeLinecap="round"
       />
@@ -97,7 +97,7 @@ export default function PaginationSVG({ totalPages, currentPage, onPageChange })
         cx={startX}
         cy={baseY}
         r="15"
-        fill="#fff"
+        className="fill-amber-600 dark:fill-amber-300"
       />
     </svg>
   );

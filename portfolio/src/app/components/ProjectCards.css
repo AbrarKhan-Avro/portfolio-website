@@ -140,11 +140,14 @@
   width: 30px;
   height: 5px;
   border-radius: 2.5px;
-  background: #fff;
+  background: #d97706;
   transition: all 0.15s ease;
   pointer-events: none; /* ensures clicks go to the hit circle */
 }
 
+.dark .paginate i {
+  background: #fcd34d;
+}
 /* === Left arrow === */
 .paginate.left i {
   transform-origin: 0% 50%;
@@ -224,9 +227,14 @@
   width: 100%;
   padding: 10px 20px;
   background: rgba(0, 0, 0, 0.55);
-  color: yellow;
+  color: #d97706;
   pointer-events: auto;
   z-index: 10;
+}
+
+.dark .overlay-top,
+.dark .overlay-bottom {
+  color: #fcd34d;
 }
 
 .overlay-top {
@@ -276,7 +284,6 @@
 }
 
 .overlay-top a {
-  color: yellow;
   text-decoration: none;
   font-weight: bold;
   font-size: x-large;
@@ -285,8 +292,7 @@
 }
 
 .overlay-top a:hover {
-  color: #fff;
-  transform: scale(1.05);
+  transform: scale(1.2);
 }
 
 /* --- Gallery Modal --- */
@@ -336,7 +342,7 @@
 .gallery-controls button {
   background: transparent;
   border: none;
-  color: #fff;
+  color: #d97706;
   font-size: 2rem;
   border-radius: 50%;
   width: 50px;
@@ -345,25 +351,33 @@
   transition: background 0.3s ease-in-out;
 }
 
+.dark .gallery-controls button {
+  color: #fcd34d;
+}
+
 .gallery-controls button:hover {
   scale: 2;
   transition: 0.3s ease-in-out;
 }
 
 .gallery-controls span {
-  color: #ccc;
+  color: #d97706;
   font-size: 1rem;
+}
+
+.dark .gallery-controls span {
+  color: #fcd34d;
 }
 
 .close-gallery {
   position: absolute;
   top: 15px;
-  right: 20px;
+  right: 15px;
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background: rgba(255, 0, 0, 0.5);
-  border: 2px solid rgba(0, 0, 0, 0.5);
+  background: rgba(255, 51, 51, 0.4);
+  border: 2px solid rgba(0, 0, 0, 0.4);
   color: #fff;
   font-size: 1.5rem;
   display: flex;
@@ -375,7 +389,29 @@
 }
 
 .close-gallery:hover {
-  background: rgba(255, 0, 0, 1);
+  background: rgba(255, 51, 51, 0.8);
   transform: rotate(90deg) scale(1.05);
-  border-color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(0, 0, 0, 0.8);
+}
+
+
+.view-project-btn {
+  margin-left: auto; /* pushes it to the right */
+  background: #d97706;
+  color: #fff;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.dark .view-project-btn {
+  background: #fcd34d;
+  color: #000;
+}
+
+.view-project-btn:hover {
+  transform: scale(1.2);
 }
