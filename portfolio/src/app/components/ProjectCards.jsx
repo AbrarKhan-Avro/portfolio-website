@@ -5,134 +5,112 @@ import PaginationSVG from "./PaginationSVG";
 
 const allProjects = [
   {
-    title: "Creative Portfolio",
+    title: "Job Portal (Internship Project)",
     image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
+      "https://raw.githubusercontent.com/AbrarKhan-Avro/internship-JBRSOFT/refs/heads/main/screenshots/Screenshot%202025-10-07%20165724.png",
     description:
-      "A React-based personal portfolio showcasing creative work with motion and 3D visuals.",
-    link: "https://example.com/creative-portfolio",
+      "Internship project under JBRSOFT. This project is of a dynamic job portal website. The website can be dynamically modified by the admin without getting technical.",
+    link: "https://github.com/AbrarKhan-Avro/internship-JBRSOFT.git",
     showcase: [
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800",
-      "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800"
+      "https://github.com/AbrarKhan-Avro/internship-JBRSOFT/blob/main/screenshots/Screenshot%202025-10-07%20165821.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/internship-JBRSOFT/blob/main/screenshots/Screenshot%202025-10-07%20165807.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/internship-JBRSOFT/blob/main/screenshots/Screenshot%202025-10-07%20165627.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/internship-JBRSOFT/blob/main/screenshots/Screenshot%202025-10-07%20165642.png?raw=true"
     ]
   },
   {
-    title: "E-commerce Dashboard",
+    title: "Rhythmix (Course Project)",
     image:
-      "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800",
+      "https://github.com/AbrarKhan-Avro/course-WT/blob/main/screenshots/2.png?raw=true",
     description:
-      "An interactive dashboard for tracking sales performance, customer data, and revenue analytics.",
-    link: "https://example.com/ecommerce-dashboard",
+      "Web Technologies course project. A music platform website like Spotify or SoundCloud. Coded in PHP.",
+    link: "https://github.com/AbrarKhan-Avro/course-WT.git",
     showcase: [
-      "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800",
-      "https://images.unsplash.com/photo-1557682250-9691d27a8d12?w=800",
-      "https://images.unsplash.com/photo-1561414927-6d1f87b03d54?w=800"
+      "https://github.com/AbrarKhan-Avro/course-WT/blob/main/screenshots/1.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/course-WT/blob/main/screenshots/7.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/course-WT/blob/main/screenshots/8.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/course-WT/blob/main/screenshots/6.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/course-WT/blob/main/screenshots/3.png?raw=true"
     ]
   },
   {
-    title: "AI Chatbot App",
+    title: "Campus Connect (Course Project)",
     image:
-      "https://images.unsplash.com/photo-1531497865144-0464ef8fb9c5?w=800",
+      "https://github.com/AbrarKhan-Avro/course-OOP1/blob/main/Campus%20Connect/screenshots/1.png?raw=true",
     description:
-      "An intelligent chatbot interface built with AI integration for seamless real-time conversations.",
-    link: "https://example.com/ai-chatbot-app",
+      "Object-Oriented Programming 1 course projects. Simple social app called Campus Connect. Basic traffic simulation. Both coded in JAVA.",
+    link: "https://github.com/AbrarKhan-Avro/course-OOP1.git",
     showcase: [
-      "https://images.unsplash.com/photo-1555617117-08f6f3a3dfc3?w=800",
-      "https://images.unsplash.com/photo-1581091215362-2c2b46c07321?w=800",
-      "https://images.unsplash.com/photo-1581091012184-5f7f4b6b55ff?w=800"
+      "https://github.com/AbrarKhan-Avro/course-OOP1/blob/main/Campus%20Connect/screenshots/2.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/course-OOP1/blob/main/Campus%20Connect/screenshots/3.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/course-OOP1/blob/main/Campus%20Connect/screenshots/4.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/course-OOP1/blob/main/Campus%20Connect/screenshots/5.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/course-OOP1/blob/main/Campus%20Connect/screenshots/6.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/course-OOP1/blob/main/Campus%20Connect/screenshots/7.png?raw=true"
     ]
   },
   {
-    title: "Data Visualization",
+    title: "Space Invaders (Course Project)",
     image:
-      "https://images.unsplash.com/photo-1610212570473-6015f631ae96?auto=format&fit=crop&w=1350&q=80",
+      "https://github.com/AbrarKhan-Avro/course-CG/blob/main/screenshots/1.png?raw=true",
     description:
-      "A dynamic data visualization dashboard with interactive charts and real-time insights.",
-    link: "https://example.com/data-visualization",
+      "Computer Graphics course project. Simple space invader style game. Coded in OpenGL.",
+    link: "https://github.com/AbrarKhan-Avro/course-CG.git",
     showcase: [
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800",
-      "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800",
-      "https://images.unsplash.com/photo-1509228627151-3cf2b39e0f7a?w=800"
+      "https://github.com/AbrarKhan-Avro/course-CG/blob/main/screenshots/2.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/course-CG/blob/main/screenshots/3.png?raw=true"
     ]
   },
   {
-    title: "Creative Web Design",
+    title: "Quiz App (Course Project)",
     image:
-      "https://images.unsplash.com/photo-1603048675767-6e79ff5b8fc1?auto=format&fit=crop&w=1350&q=80",
+      "https://github.com/AbrarKhan-Avro/course-OOP2/blob/main/screenshots/1.png?raw=true",
     description:
-      "A modern, artistic web design focused on aesthetics, typography, and motion-based user interaction.",
-    link: "https://example.com/creative-web-design",
+      "Object-Oriented Programming 2 course project. Simple quiz app. Coded in C#.",
+    link: "https://github.com/AbrarKhan-Avro/course-OOP2.git",
     showcase: [
-      "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800",
-      "https://images.unsplash.com/photo-1557682250-9691d27a8d12?w=800",
-      "https://images.unsplash.com/photo-1561414927-6d1f87b03d54?w=800"
+      "https://github.com/AbrarKhan-Avro/course-OOP2/blob/main/screenshots/2.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/course-OOP2/blob/main/screenshots/3.png?raw=true"
     ]
   },
   {
-    title: "Marketing Analytics",
+    title: "Breakout Game (Course Project)",
     image:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1350&q=80",
+      "https://github.com/AbrarKhan-Avro/course-IP/blob/main/screenshots/1.png?raw=true",
     description:
-      "An analytics platform for marketers to track campaigns, conversions, and customer engagement.",
-    link: "https://example.com/marketing-analytics",
+      "Introduction to Programming course project. Simple breakout style game. Coded in C++.",
+    link: "https://github.com/AbrarKhan-Avro/course-IP.git",
     showcase: [
-      "https://images.unsplash.com/photo-1581091215362-2c2b46c07321?w=800",
-      "https://images.unsplash.com/photo-1581091012184-5f7f4b6b55ff?w=800",
-      "https://images.unsplash.com/photo-1555617117-08f6f3a3dfc3?w=800"
+      "https://github.com/AbrarKhan-Avro/course-IP/blob/main/screenshots/2.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/course-IP/blob/main/screenshots/3.png?raw=true"
     ]
   },
   {
-    title: "Finance Dashboard",
+    title: "Algorithmic Trading Adventure (Internship Project)",
     image:
-      "https://images.unsplash.com/photo-1612831817884-5241c0f0b9ef?auto=format&fit=crop&w=1350&q=80",
+      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_1-01.png?raw=true",
     description:
-      "A sleek financial dashboard for tracking expenses, profits, and investment performance in real-time.",
-    link: "https://example.com/finance-dashboard",
+      "A python based algorithmic trading bot that uses financial market data and creates a demo simulation with output data and charts.",
+    link: "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment.git",
     showcase: [
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800",
-      "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800",
-      "https://images.unsplash.com/photo-1509228627151-3cf2b39e0f7a?w=800"
+      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_1-02.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_1-03.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_1-04.png?raw=true"
     ]
   },
   {
-    title: "Game Landing Page",
+    title: "Samsung Phone Advisor (Internship Project)",
     image:
-      "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&fit=crop&w=1350&q=80",
+      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_2-01.png?raw=true",
     description:
-      "A cinematic landing page for a game launch featuring animated visuals and engaging call-to-actions.",
-    link: "https://example.com/game-landing-page",
+      "A web application that helps users choose the right Samsung phone model based on their preferences using Retrieval-Augmented Generation (RAG) and Large Language Models (LLM).",
+    link: "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment.git",
     showcase: [
-      "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800",
-      "https://images.unsplash.com/photo-1557682250-9691d27a8d12?w=800",
-      "https://images.unsplash.com/photo-1561414927-6d1f87b03d54?w=800"
+      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_2-02.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_2-03.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_2-04.png?raw=true"
     ]
   },
-  {
-    title: "3D Product Showcase",
-    image:
-      "https://images.unsplash.com/photo-1602526218560-74e07d1d8f61?auto=format&fit=crop&w=1350&q=80",
-    description:
-      "An immersive 3D product display page with interactive model views and smooth transitions.",
-    link: "https://example.com/3d-product-showcase",
-    showcase: [
-      "https://images.unsplash.com/photo-1581091215362-2c2b46c07321?w=800",
-      "https://images.unsplash.com/photo-1581091012184-5f7f4b6b55ff?w=800",
-      "https://images.unsplash.com/photo-1555617117-08f6f3a3dfc3?w=800"
-    ]
-  },
-  {
-    title: "Portfolio Revamp",
-    image:
-      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1350&q=80",
-    description:
-      "A redesigned personal portfolio with improved performance, layout, and visual storytelling. Dummy text dummy text. Dummy text dummy text. Dummy text dummy text. Dummy text dummy text. Dummy text dummy text. Dummy text dummy text. Dummy text dummy text. Dummy text dummy text. Dummy text dummy text. Dummy text dummy text. Dummy text dummy text.",
-    link: "https://example.com/portfolio-revamp",
-    showcase: [
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800",
-      "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800",
-      "https://images.unsplash.com/photo-1509228627151-3cf2b39e0f7a?w=800"
-    ]
-  }
 ];
 
 export default function ProjectCards() {

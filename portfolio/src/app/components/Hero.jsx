@@ -185,7 +185,7 @@ export default function Hero() {
                 }
 
                 .dark .flip-btn span {
-                  background: rgb(255, 235, 59, 1);
+                  background: rgb(255, 213, 79, 1);
                 }
 
                 .flip-btn:hover span {

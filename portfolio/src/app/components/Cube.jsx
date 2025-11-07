@@ -34,7 +34,7 @@ export default function Cube() {
         <div className="face front">
           <img
             src={new URL(
-              "../assets/pexels-macro-photography-12412301-12569708.jpg",
+              "../assets/01.jpg",
               import.meta.url
             ).href}
             alt="Front"
@@ -43,7 +43,7 @@ export default function Cube() {
         <div className="face back">
           <img
             src={new URL(
-              "../assets/pexels-balazs-benjamin-299828-872492.jpg",
+              "../assets/06.jpg",
               import.meta.url
             ).href}
             alt="Back"
@@ -52,7 +52,7 @@ export default function Cube() {
         <div className="face right">
           <img
             src={new URL(
-              "../assets/pexels-balazs-benjamin-299828-872512.jpg",
+              "../assets/02.jpg",
               import.meta.url
             ).href}
             alt="Right"
@@ -61,7 +61,7 @@ export default function Cube() {
         <div className="face left">
           <img
             src={new URL(
-              "../assets/pexels-wes-guild-2156563637-34439880.jpg",
+              "../assets/03.jpg",
               import.meta.url
             ).href}
             alt="Left"
@@ -70,7 +70,7 @@ export default function Cube() {
         <div className="face top">
           <img
             src={new URL(
-              "../assets/pexels-mahmoud-yahyaoui-34368085.jpg",
+              "../assets/04.jpg",
               import.meta.url
             ).href}
             alt="Top"
@@ -79,7 +79,7 @@ export default function Cube() {
         <div className="face bottom">
           <img
             src={new URL(
-              "../assets/pexels-alisha-mishra-579430-1346347.jpg",
+              "../assets/05.jpg",
               import.meta.url
             ).href}
             alt="Bottom"
