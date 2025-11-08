@@ -418,3 +418,104 @@
 .view-project-btn:hover {
   transform: scale(1.2);
 }
+
+
+
+.gallery-image-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70vw;
+  height: 60vh;
+}
+
+.image-loader {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70vw;
+  height: 60vh;
+  background: rgba(20, 20, 20, 0.5);
+  border-radius: 15px;
+  z-index: 5;
+}
+
+/* ===== New Animated Circular Loader ===== */
+.profile-main-loader {
+  position: relative;
+  width: 45px;
+  height: 45px;
+  z-index: 9000;
+}
+
+.profile-main-loader .loader {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+.circular-loader {
+  animation: rotate 2s linear infinite;
+  height: 100%;
+  transform-origin: center center;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: auto;
+}
+
+.loader-path {
+  stroke-dasharray: 150, 200;
+  stroke-dashoffset: -10;
+  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}
+
+@keyframes color {
+  0%, 40%, 66%, 80%, 90%, 100% {
+  }
+}
+
+/* Light mode color */
+.loader-path {
+  stroke: #d97706; /* green by default */
+}
+
+/* Dark mode override */
+.dark .loader-path {
+  stroke: #fcd34d; /* white for dark mode */
+}
+
+/* Keep fade-in animation for image */
+.gallery-image.hidden {
+  opacity: 0;
+}
+
+.gallery-image {
+  transition: opacity 0.5s ease-in-out;
+}

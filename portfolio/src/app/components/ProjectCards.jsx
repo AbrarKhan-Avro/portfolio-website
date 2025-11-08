@@ -313,11 +313,12 @@ export default function ProjectCards() {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               onClick={(e) => e.stopPropagation()}
             >
-              <img
+              {/* 🌀 Added loading animation for gallery images */}
+              <GalleryImageWithLoader
                 src={galleryProject.showcase[currentImage]}
                 alt={galleryProject.title}
-                className="gallery-image"
               />
+
               <div className="gallery-controls">
                 <button
                   onClick={() =>
@@ -357,6 +358,47 @@ export default function ProjectCards() {
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  );
+}
+
+// 🌀 Added helper component for image loading
+function GalleryImageWithLoader({ src, alt }) {
+  const [loading, setLoading] = useState(true);
+
+  // Reset loader when image src changes
+  useEffect(() => {
+    setLoading(true);
+  }, [src]);
+
+  return (
+    <div className="gallery-image-wrapper">
+      {loading && (
+        <div className="image-loader">
+          <div className="profile-main-loader">
+            <div className="loader">
+              <svg className="circular-loader" viewBox="25 25 50 50">
+                <circle
+                  className="loader-path"
+                  cx="50"
+                  cy="50"
+                  r="20"
+                  fill="none"
+                  stroke="#70c542"
+                  strokeWidth="2"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        className={`gallery-image ${loading ? "hidden" : ""}`}
+        onLoad={() => setLoading(false)}
+        onError={() => setLoading(false)}
+      />
     </div>
   );
 }
