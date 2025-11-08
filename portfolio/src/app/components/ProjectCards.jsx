@@ -5,6 +5,19 @@ import PaginationSVG from "./PaginationSVG";
 
 const allProjects = [
   {
+    title: "Samsung Phone Advisor (Internship Project)",
+    image:
+      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_2-01.png?raw=true",
+    description:
+      "A web application that helps users choose the right Samsung phone model based on their preferences using Retrieval-Augmented Generation (RAG) and Large Language Models (LLM).",
+    link: "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment.git",
+    showcase: [
+      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_2-02.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_2-03.png?raw=true",
+      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_2-04.png?raw=true"
+    ]
+  },
+  {
     title: "Job Portal (Internship Project)",
     image:
       "https://raw.githubusercontent.com/AbrarKhan-Avro/internship-JBRSOFT/refs/heads/main/screenshots/Screenshot%202025-10-07%20165724.png",
@@ -96,19 +109,6 @@ const allProjects = [
       "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_1-02.png?raw=true",
       "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_1-03.png?raw=true",
       "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_1-04.png?raw=true"
-    ]
-  },
-  {
-    title: "Samsung Phone Advisor (Internship Project)",
-    image:
-      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_2-01.png?raw=true",
-    description:
-      "A web application that helps users choose the right Samsung phone model based on their preferences using Retrieval-Augmented Generation (RAG) and Large Language Models (LLM).",
-    link: "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment.git",
-    showcase: [
-      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_2-02.png?raw=true",
-      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_2-03.png?raw=true",
-      "https://github.com/AbrarKhan-Avro/GTRL-Internship-Assignment/blob/main/screenshots/Task_2-04.png?raw=true"
     ]
   },
 ];

@@ -88,7 +88,7 @@ export default function Footer() {
       >
         <div className="flex justify-center gap-6 text-2xl mb-4">
           <a
-            href="https://github.com/"
+            href="https://github.com/AbrarKhan-Avro"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors icon-wobble"
@@ -96,7 +96,7 @@ export default function Footer() {
             <FaGithub />
           </a>
           <a
-            href="https://linkedin.com/"
+            href="https://www.linkedin.com/in/abrar-khan-98aa151b2"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors icon-wobble"
@@ -104,7 +104,7 @@ export default function Footer() {
             <FaLinkedin />
           </a>
           <a
-            href="mailto:your@email.com"
+            href="mailto:aak.avro@gmail.com"
             className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors icon-wobble"
           >
             <FaEnvelope />
