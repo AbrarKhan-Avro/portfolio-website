@@ -11,6 +11,7 @@ import { useInView } from "react-intersection-observer";
 import { useState, useEffect } from "react";
 import "./ContactTitleEffect.css";
 import SpotlightButton from "./SpotlightButton";
+import emailjs from "@emailjs/browser";
 
 const reloadKey = Date.now();
 
@@ -31,19 +32,40 @@ export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  // ✅ Updated handleSubmit (EmailJS)
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+
+    emailjs
+      .send(
+        "service_6tki80p",
+        "template_ke7ckdk",
+        {
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        },
+        "xl_aOxFCFiXAvkl8Y"
+      )
+      .then(() => {
+        setSubmitted(true);
+        setForm({ name: "", email: "", message: "" });
+        setTimeout(() => setSubmitted(false), 3000);
+      })
+      .catch((err) => {
+        console.error("EmailJS Error:", err);
+      });
   };
 
   // 🔹 Typing effect setup
-  const fullText = "Have a project in mind, or just want to say hello? Fill out the form below — I’d love to hear from you.";
+  const fullText =
+    "Have a project in mind, or just want to say hello? Fill out the form below — I’d love to hear from you.";
   const [displayText, setDisplayText] = useState("");
 
   useEffect(() => {
-    // Detect a real page reload — force remount each time
-    const isReload = performance.getEntriesByType("navigation")[0]?.type === "reload";
+    const isReload =
+      performance.getEntriesByType("navigation")[0]?.type === "reload";
 
     if (isReload || inView) {
       setDisplayText("");
@@ -58,7 +80,6 @@ export default function Contact() {
     }
   }, [inView, fullText]);
 
-
   // Parallax Motion values
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -66,7 +87,10 @@ export default function Contact() {
 
   useEffect(() => {
     const updateViewport = () => {
-      setViewport({ width: window.innerWidth || 1, height: window.innerHeight || 1 });
+      setViewport({
+        width: window.innerWidth || 1,
+        height: window.innerHeight || 1,
+      });
     };
     updateViewport();
 
@@ -114,7 +138,10 @@ export default function Contact() {
         style={{ backgroundSize: "300% 300%", filter: "blur(60px)" }}
       />
 
-      <div className="relative z-10 flex flex-col items-center w-full max-w-md" style={{ perspective: 1000 }}>
+      <div
+        className="relative z-10 flex flex-col items-center w-full max-w-md"
+        style={{ perspective: 1000 }}
+      >
         <motion.div
           style={{
             rotateX: smoothX,
@@ -128,9 +155,18 @@ export default function Contact() {
             variants={fadeVariant}
             className="font-lobster text-4xl font-bold mb-8 text-zinc-900 dark:text-white transition-colors duration-500"
           >
-            <span className="get-in-touch-hover" aria-hidden="false" role="text">
+            <span
+              className="get-in-touch-hover"
+              aria-hidden="false"
+              role="text"
+            >
               {"Get In Touch".split("").map((ch, i) => (
-                <span key={i} className="cth-letter" data-char={ch} tabIndex={0}>
+                <span
+                  key={i}
+                  className="cth-letter"
+                  data-char={ch}
+                  tabIndex={0}
+                >
                   {ch === " " ? "\u00A0" : ch}
                 </span>
               ))}
@@ -154,7 +190,9 @@ export default function Contact() {
             className="w-full space-y-5"
           >
             <div>
-              <label className="block text-zinc-700 dark:text-gray-400 mb-1 transition-colors duration-500">Name</label>
+              <label className="block text-zinc-700 dark:text-gray-400 mb-1 transition-colors duration-500">
+                Name
+              </label>
               <input
                 type="text"
                 name="name"
@@ -166,7 +204,9 @@ export default function Contact() {
             </div>
 
             <div>
-              <label className="block text-zinc-700 dark:text-gray-400 mb-1 transition-colors duration-500">Email</label>
+              <label className="block text-zinc-700 dark:text-gray-400 mb-1 transition-colors duration-500">
+                Email
+              </label>
               <input
                 type="email"
                 name="email"
@@ -178,7 +218,9 @@ export default function Contact() {
             </div>
 
             <div>
-              <label className="block text-zinc-700 dark:text-gray-400 mb-1 transition-colors duration-500">Message</label>
+              <label className="block text-zinc-700 dark:text-gray-400 mb-1 transition-colors duration-500">
+                Message
+              </label>
               <textarea
                 name="message"
                 value={form.message}
@@ -189,9 +231,10 @@ export default function Contact() {
               />
             </div>
 
-            <SpotlightButton onClick={handleSubmit} formValid={form.name && form.email && form.message} />
-
-
+            <SpotlightButton
+              onClick={handleSubmit}
+              formValid={form.name && form.email && form.message}
+            />
           </motion.form>
         </motion.div>
       </div>
