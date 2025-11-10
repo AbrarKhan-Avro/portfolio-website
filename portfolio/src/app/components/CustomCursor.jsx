@@ -16,20 +16,31 @@ export default function CustomCursor() {
   const [isText, setIsText] = useState(false);
   const [ripples, setRipples] = useState([]);
   const [isClicking, setIsClicking] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
+  // ✅ Detect mobile devices or small screens
   useEffect(() => {
-    // Track cursor position using pointer events
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // ✅ Skip cursor setup entirely on mobile
+  useEffect(() => {
+    if (isMobile) return;
+
     const moveCursor = (e) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
     };
     window.addEventListener("pointermove", moveCursor, { passive: true });
 
-    // Hover effects
     const hoverStart = () => setIsHovering(true);
     const hoverEnd = () => setIsHovering(false);
 
-    // Text input effects
     const textStart = () => {
       setIsText(true);
       setCursorSize(12);
@@ -39,7 +50,6 @@ export default function CustomCursor() {
       setCursorSize(isHovering ? 40 : 24);
     };
 
-    // Click ripple effect
     const handleClick = (e) => {
       const id = Date.now();
       const x = e.clientX;
@@ -50,13 +60,9 @@ export default function CustomCursor() {
       }, 500);
     };
 
-    // Hold click ring
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
 
-    // -----------------------------
-    // Event delegation for hoverables
-    // -----------------------------
     const handleMouseOver = (e) => {
       const target = e.target.closest("a, button, pointer, .hoverable");
       if (target) hoverStart();
@@ -67,7 +73,6 @@ export default function CustomCursor() {
       if (target) hoverEnd();
     };
 
-    // Text inputs delegation
     const handleTextOver = (e) => {
       const target = e.target.closest("input, textarea, [contenteditable='true']");
       if (target) textStart();
@@ -100,17 +105,20 @@ export default function CustomCursor() {
       window.removeEventListener("mouseover", handleTextOver);
       window.removeEventListener("mouseout", handleTextOut);
     };
-  }, [cursorX, cursorY, cursorSize, isHovering]);
+  }, [cursorX, cursorY, cursorSize, isHovering, isMobile]);
 
   useEffect(() => {
-    setCursorSize(isHovering ? 40 : 24);
-  }, [isHovering]);
+    if (!isMobile) setCursorSize(isHovering ? 40 : 24);
+  }, [isHovering, isMobile]);
+
+  // ✅ If on mobile, render nothing
+  if (isMobile) return null;
 
   return (
     <>
       {/* Outer big glow */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 rounded-full bg-purple-800/10 dark:bg-purple-200/10 blur-[120px] z-[9998]"
+        className="pointer-events-none fixed top-0 left-0 rounded-full bg-amber-800/10 dark:bg-amber-200/10 blur-[120px] z-[9998]"
         style={{
           width: 400,
           height: 400,
@@ -123,7 +131,7 @@ export default function CustomCursor() {
 
       {/* Inner glow */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 rounded-full bg-purple-900/20 dark:bg-purple-300/10 blur-[60px] mix-blend-lighten z-[9999]"
+        className="pointer-events-none fixed top-0 left-0 rounded-full bg-amber-900/20 dark:bg-amber-300/10 blur-[60px] mix-blend-lighten z-[9999]"
         style={{
           width: 150,
           height: 150,
@@ -152,7 +160,7 @@ export default function CustomCursor() {
       {/* Click-hold ring */}
       {isClicking && (
         <motion.div
-          className="pointer-events-none fixed top-0 left-0 rounded-full border border-purple-400/80 z-[10001]"
+          className="pointer-events-none fixed top-0 left-0 rounded-full border border-amber-600 dark:border-amber-300 z-[10001]"
           style={{
             width: cursorSize * 2,
             height: cursorSize * 2,
@@ -177,7 +185,7 @@ export default function CustomCursor() {
       {ripples.map((ripple) => (
         <motion.div
           key={ripple.id}
-          className="pointer-events-none fixed top-0 left-0 rounded-full border border-purple-400 z-[9999]"
+          className="pointer-events-none fixed top-0 left-0 rounded-full border border-amber-600 dark:border-amber-300 z-[9999]"
           initial={{ opacity: 0.6, scale: 0 }}
           animate={{ opacity: 0, scale: 5 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
