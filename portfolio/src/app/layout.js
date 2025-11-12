@@ -6,7 +6,7 @@ import Preloader from "./components/Preloader";
 import { ThemeProvider } from "next-themes";
 
 export const metadata = {
-  title: "Abrar Khan Portfolio",
+  title: "Abrar's Webspace",
   description: "Web Developer & Storyteller",
 };
 
