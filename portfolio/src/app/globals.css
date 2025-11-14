@@ -303,3 +303,20 @@ body::-webkit-scrollbar {
   transform: scale(0.4);
   transform-origin: center center;
 }
+
+
+/* Hide scrollbar and navigation dots on mobile */
+@media (max-width: 768px) {
+  .scrollbox {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  .scrollbox::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .section-navigate {
+    display: none !important;
+  }
+}

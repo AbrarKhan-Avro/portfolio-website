@@ -54,12 +54,12 @@ export default function ScrollSections() {
         onMouseLeave={() => setHovered(false)}
       >
         <ul className="section-navigate__items relative">
-          {["hero", "about", "projects", "contact"].map((name) => (
+          {["home", "about", "projects", "contact"].map((name) => (
             <li key={name} className="section-navigate__item relative mb-3">
               <a
                 href={`#${name}`}
                 className={`section-navigate__link js--navigate-link ${
-                  name === "hero" ? "is--active" : ""
+                  name === "home" ? "is--active" : ""
                 }`}
               >
                 <span className="section-navigate__name capitalize">{name}</span>

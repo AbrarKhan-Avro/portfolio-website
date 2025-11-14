@@ -59,7 +59,7 @@ export default function Home() {
   return (
     <main className="overflow-x-hidden">
       {/* --- Regular Scrolling Sections --- */}
-      <section id="hero" className="js--scrollify" data-section-name="hero">
+      <section id="home" className="js--scrollify" data-section-name="home">
         <Hero />
       </section>
 
@@ -83,12 +83,12 @@ export default function Home() {
       {/* --- Navigation Dots --- */}
       <nav className="section-navigate js--navigate fixed top-1/2 -translate-y-1/2 right-5 z-[9999] transition-opacity duration-500">
         <ul className="section-navigate__items relative">
-          {["hero", "about", "projects", "contact"].map((name) => (
+          {["home", "about", "projects", "contact"].map((name) => (
             <li key={name} className="section-navigate__item relative mb-3">
               <a
                 href={`#${name}`}
                 className={`section-navigate__link js--navigate-link ${
-                  name === "hero" ? "is--active" : ""
+                  name === "home" ? "is--active" : ""
                 }`}
               >
                 <span className="section-navigate__name capitalize">{name}</span>
